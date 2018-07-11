@@ -94,7 +94,7 @@ router.put('/password/recover', function(req, res, next) {
                     return res.status(200).json({ status: 'OK' });
                 }, function (err) {
                     if (err) {
-                        return res.status(500).send({ msg: err.message });
+                        return res.status(500).send({ errors: [{ msg: err.message } ]);
                     }
                 });
         });
@@ -121,11 +121,11 @@ router.put('/password/reset/:password_reset_token', [validate.password], functio
 
         if (!user)
         // reset token not provided or invalid
-            return res.status(422).json({ errors: { msg: 'invalid reset token' } });
+            return res.status(422).json({ errors: [{ msg: 'invalid reset token' }] });
 
         if(req.body.user.password !== req.body.user.passwordVrf)
         // passwords don't match
-            return res.status(422).json({ errors: { msg: 'passwords don\'t match' } });
+            return res.status(422).json({ errors: [{ msg: 'passwords don\'t match' }] });
 
         user.password_reset_token = '';
         user.password = req.body.user.password;
