@@ -1,4 +1,4 @@
-A small, easily extendable base API for authentication, written with Express.js.
+A small, easily extendable base API for authenticating users with JSON Web Token (JWT), written with Express.js.
 
 ## Installation
 
