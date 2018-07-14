@@ -94,7 +94,7 @@ router.put('/password/recover', function(req, res, next) {
                     return res.status(200).json({ status: 'OK' });
                 }, function (err) {
                     if (err) {
-                        return res.status(500).send({ errors: [{ msg: err.message } ]);
+                        return res.status(500).send({ errors: [{ msg: err.message } ]});
                     }
                 });
         });
