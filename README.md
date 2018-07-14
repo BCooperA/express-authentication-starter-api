@@ -46,54 +46,33 @@ npm run dev
 * Emails - Templated e-mails for signup and password recover
 
 ## API Routes
-- Authenticates users locally with username and password
-```
-POST - /auth/signin 
-```
-- Authenticates users with Facebook
-```
-GET  - /auth/signin/facebook/callback 
-```
-- Authenticates users with Twitter
-```
-GET  - /auth/signin/twitter/callback 
-```
-- Authenticates users with Google
-```
-GET  - /auth/signin/google/callback 
-```
-- Checks whether or not e-mail address already exists
-```
-GET  - /account/email/:email 
-```
-- Activates user account
-```
-GET  - /account/activate/:activation_token 
-```
-- Send reset instructions via e-mail
-```
-PUT  - /account/password/recover 
-```
-- Reset password
-```
-PUT  - /account/password/reset/:token 
-```
-- Returns auth data for user based on payload
-```
-GET  - /api/user 
-```
-- Returns user data based by id
-```
-GET  - /api/user/:id 
-```
-- Updates user
-```
-PUT  - /api/user 
-```
-- Creates new user
-```
-POST - /api/users 
-```
+
+### Authentication
+
+|Method| Endpoint URL                    | Params (if needed)     | Action       |
+| ---- |---------------------| -----------------------------------| -------------|
+| POST | /auth/signin                    | email, password        | Authenticates users with username and password |
+| GET  | /auth/signin/facebook/callback  |                        | Authenticates users with Facebook |
+| GET  | /auth/signin/twitter/callback   |                        | Authenticates users with Twitter |
+| GET  | /auth/signin/google/callback    |                        | Authenticates users with Google |
+
+### Account
+
+|Method| Endpoint URL                       | Params (if needed)     | Action       |
+| ---- |---------------------| --------------------------------------| -------------|
+| GET | /account/email/:email               | email                  | Checks whether or not e-mail address already exists |
+| GET | /account/activate/:activation_token |   activation_token     | Activates user account |
+| PUT | /account/password/recover           |                        | Send reset instructions via e-mail |
+| PUT  | /account/password/reset/:token     |    token               | Resets password |
+
+### User
+
+|Method| Endpoint URL        | Params (if needed)                 | Action       |
+| ---- |---------------------| -----------------------------------| -------------|
+| GET | /api/user            |                                    | Returns authentication data for user based on payload |
+| GET | /api/user/:id        |    id                              | Returns user data based on id |
+| PUT | /api/user            |                                    | Updates user data
+| POST  | /api/users         |                                    | Creates new user |
 
 ## Error handling 
 By default, errors are returned as JSON in following format:
