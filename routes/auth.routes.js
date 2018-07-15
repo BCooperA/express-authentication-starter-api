@@ -58,14 +58,17 @@ router.get('/signin/facebook/callback', function(req, res, next) {
             return next(err);
 
         user.token = user.generateJWT();
-        var userCookie = JSON.stringify({
-            'id': user._id,
-            'token': user.token
-        });
+        // var userCookie = JSON.stringify({
+        //     'id': user._id,
+        //     'token': user.token
+        // });
 
         // send user data as JSON in cookie and redirect
-        res.cookie('user', userCookie);
-        res.redirect('/app/dashboard');
+        // res.cookie('user', userCookie);
+
+        //res.redirect('/app/dashboard');
+        // return user object
+        return res.status(200).json({ user: user.toAuthJSON() });
     })(req, res, next);
 });
 
@@ -83,14 +86,20 @@ router.get('/signin/twitter/callback', function(req, res, next) {
             return next(err);
 
         user.token = user.generateJWT();
-        var userCookie = JSON.stringify({
-            'id': user._id,
-            'token': user.token
-        });
 
-        // save user data as JSON in cookie and redirect
-        res.cookie('user', userCookie);
-        res.redirect('/app/dashboard');
+
+        // var userCookie = JSON.stringify({
+        //     'id': user._id,
+        //     'token': user.token
+        // });
+        //
+        // // save user data as JSON in cookie and redirect
+
+        // res.cookie('user', userCookie);
+        // // res.redirect('/app/dashboard');
+
+        // return user object
+        return res.status(200).json({ user: user.toAuthJSON() });
     })(req, res, next);
 });
 
@@ -112,14 +121,18 @@ router.get('/signin/google/callback', function(req, res, next) {
             return next(err);
 
         user.token = user.generateJWT();
-        var userCookie = JSON.stringify({
-            'id': user._id,
-            'token': user.token
-        });
+        // var userCookie = JSON.stringify({
+        //     'id': user._id,
+        //     'token': user.token
+        // });
+        //
+        // // save user data as JSON in cookie and redirect
+        // res.cookie('user', userCookie);
 
-        // save user data as JSON in cookie and redirect
-        res.cookie('user', userCookie);
-        res.redirect('/app/dashboard');
+        //res.redirect('/app/dashboard');
+
+        // return user object
+        return res.status(200).json({ user: user.toAuthJSON() });
     })(req, res, next);
 });
 
