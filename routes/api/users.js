@@ -78,9 +78,6 @@ router.put('/user', [validate.email, validate.firstName, validate.lastName, vali
         if(req.body.user.lastName !== undefined)
             user.name.last = req.body.user.lastName;
 
-        if(req.body.user.email !== undefined)
-            user.email = req.body.user.email;
-
         if(req.body.user.firstName !== undefined)
             user.name.first = req.body.user.firstName;
 
