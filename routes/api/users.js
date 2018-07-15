@@ -72,10 +72,20 @@ router.put('/user', [validate.email, validate.firstName, validate.lastName, vali
         if(!user)
             return res.status(404).json({ errors: [{ msg: 'User not found' }] });
 
-        user.email = req.body.user.email;
-        user.name.first = req.body.user.firstName;
-        user.name.last = req.body.user.lastName;
-        user.password = req.body.user.password;
+        if(req.body.user.email !== undefined)
+            user.email = req.body.user.email;
+
+        if(req.body.user.lastName !== undefined)
+            user.name.last = req.body.user.lastName;
+
+        if(req.body.user.email !== undefined)
+            user.email = req.body.user.email;
+
+        if(req.body.user.firstName !== undefined)
+            user.name.first = req.body.user.firstName;
+
+        if(req.body.user.password !== undefined)
+            user.password = req.body.user.password;
 
         user.save().then(function(){
             return res.json({user: user.toAuthJSON()});
