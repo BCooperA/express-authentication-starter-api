@@ -73,20 +73,6 @@ UserSchema.pre('save', function(next) {
 });
 
 /**
- * Hash password with blowfish algorithm (bcrypt) before saving it in to the database
- */
-UserSchema.pre('save', function(next) {
-    var user = this;
-
-    // only hash the password if it has been modified (or is new)
-    if (!user.isModified('email'))
-        return next();
-
-    user.email = user.email;
-    next();
-});
-
-/**
  * Generates JSON Web Token (JWT) for authenticated user
  * @returns {*}
  */

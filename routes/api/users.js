@@ -72,7 +72,7 @@ router.put('/user', [validate.email, validate.firstName, validate.lastName, vali
         if(!user)
             return res.status(404).json({ errors: [{ msg: 'User not found' }] });
 
-        if(req.body.user.email !== undefined)
+        if(req.body.user.email !== undefined && user.email !== req.body.user.email)
             user.email = req.body.user.email;
 
         if(req.body.user.lastName !== undefined)
