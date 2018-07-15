@@ -62,7 +62,7 @@ router.get('/user/:id', function(req, res, next) {
  | Updates user data based on JSON Web Token saved in payload
  |
  */
-router.put('/user', [validate.email, validate.firstName, validate.lastName, validate.password, auth.required], function(req, res, next) {
+router.put('/user', [validate.firstName, validate.lastName, validate.password, auth.required], function(req, res, next) {
     // catch validation errors
     const errors = validationResult(req);
     if (!errors.isEmpty())
@@ -72,8 +72,9 @@ router.put('/user', [validate.email, validate.firstName, validate.lastName, vali
         if(!user)
             return res.status(404).json({ errors: [{ msg: 'User not found' }] });
 
-        if(req.body.user.email !== undefined || user.email !== req.body.user.email)
+        if(user.email !== req.body.user.email && user.email !== undefined) {
             user.email = req.body.user.email;
+        }
 
         if(req.body.user.lastName !== undefined)
             user.name.last = req.body.user.lastName;
