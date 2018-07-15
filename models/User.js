@@ -81,6 +81,9 @@ UserSchema.pre('save', function(next) {
     // only hash the password if it has been modified (or is new)
     if (!user.isModified('email'))
         return next();
+
+    user.email = user.email;
+    next();
 });
 
 /**
