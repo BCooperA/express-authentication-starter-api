@@ -1,5 +1,5 @@
 const jwt     = require('express-jwt')
-    , secret  = require('../config/index').jwt_secret;
+    , secret  = require('../config/main').jwt_secret;
 
 /**
  * Read Json Web Token from request header object

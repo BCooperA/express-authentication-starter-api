@@ -1,8 +1,17 @@
+/**
+ |--------------------------------------------------------------------------
+ | Models - User
+ |--------------------------------------------------------------------------
+ |
+ | This is the Mongoose model file for MongoDB's User collection.
+ | In here, you can define all the database properties and methods for User
+ |
+ */
 const mongoose            = require('mongoose')
     , bcrypt              = require('bcrypt-nodejs')
     , SALT_WORK_FACTOR    = 10
     , jwt                 = require('jsonwebtoken')
-    , secret              = require('../config/index').jwt_secret;
+    , secret              = require('../config/main').jwt_secret;
 
 const UserSchema = new mongoose.Schema({
     _id: {
@@ -47,7 +56,9 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     }
-}, { timestamps: true });
+}, {
+    timestamps: true
+});
 
 /**
  * Check whether the entered password matches with the salt and hash saved in the database
@@ -71,6 +82,7 @@ UserSchema.pre('save', function(next) {
     user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(SALT_WORK_FACTOR), null);
     next();
 });
+
 
 /**
  * Generates JSON Web Token (JWT) for authenticated user

@@ -10,7 +10,7 @@ const express             = require('express')
     , mongoose            = require('mongoose')
     , helmet              = require('helmet')
     , cookieParser        = require('cookie-parser')
-    , config              = require('./config/index')
+    , config              = require('./config/main');
 
 /**
  |--------------------------------------------------------------------------
@@ -67,7 +67,7 @@ app.set('view engine','pug'); // set view engine to pug for our email templates
  |--------------------------------------------------------------------------
  */
 mongoose.Promise = global.Promise; //  mongoose's default promise library is deprecated, plug in your own promise library instead
-mongoose.connect(config.mongodb.url, {
+mongoose.connect(config.database.mongo.url, {
     useMongoClient: true,
     promiseLibrary: require('bluebird')
 });
@@ -100,7 +100,7 @@ app.get('/', function(req, res, next) {
     res.status(200).json({ version: 1, message: "API endpoint is: " + req.protocol + '://' + req.get('host') + req.originalUrl + '/api' })
 });
 
-app.use(require('./routes'));
+app.use(require('./routes/main'));
 
 /**
  |--------------------------------------------------------------------------

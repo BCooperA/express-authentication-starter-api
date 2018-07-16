@@ -5,13 +5,13 @@
  |
  | A helper function for sending template e-mails
  | Special thanks to Josh Greenberg: https://codemoto.io/coding/nodejs/nodemailer-email-templates-using-node
- | https://github.com/niftylettuce/email-templates
+ | emailTemplates repo: https://github.com/niftylettuce/email-templates
  |
  */
 const Q                 = require('q')
     , nodemailer        = require('nodemailer')
     , emailTemplates    = require('email-templates')
-    , mailOptions       = require('../../config/mail');
+    , mailOptions       = require('../../config/main').mail;
 
 const Mailer = {
     _template: null,

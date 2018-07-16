@@ -1,12 +1,3 @@
-const passport         = require('passport')
-    , authProviders    = require('./index.js').authProviders
-    , mongoose         = require('mongoose')
-    , User             = mongoose.model('User')
-    , LocalStrategy    = require('passport-local').Strategy
-    , FacebookStrategy = require('passport-facebook').Strategy
-    , TwitterStrategy  = require('passport-twitter').Strategy
-    , GoogleStrategy   = require('passport-google-oauth20').Strategy;
-
 /**
  |--------------------------------------------------------------------------
  | Passport Strategies
@@ -18,6 +9,14 @@ const passport         = require('passport')
  | and add more services (i.e. Github)
  |
  */
+const passport         = require('passport')
+    , authProviders    = require('./main.js').auth.providers
+    , mongoose         = require('mongoose')
+    , User             = mongoose.model('User')
+    , LocalStrategy    = require('passport-local').Strategy
+    , FacebookStrategy = require('passport-facebook').Strategy
+    , TwitterStrategy  = require('passport-twitter').Strategy
+    , GoogleStrategy   = require('passport-google-oauth20').Strategy;
 
 /**
  |--------------------------------------------------------------------------

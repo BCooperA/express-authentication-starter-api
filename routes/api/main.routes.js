@@ -1,5 +1,3 @@
-const router = require('express').Router();
-
 /**
  |--------------------------------------------------------------------------
  | API Routes - Main
@@ -9,8 +7,9 @@ const router = require('express').Router();
  | use the router middleware
  |
  */
+const router = require('express').Router();
 
-router.use('/', require('./users'));
+router.use('/', require('./users.routes'));
 
 /**
  |--------------------------------------------------------------------------
