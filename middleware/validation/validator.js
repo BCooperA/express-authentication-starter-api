@@ -1,7 +1,14 @@
+/**
+ |--------------------------------------------------------------------------
+ | Middleware - Validation
+ |--------------------------------------------------------------------------
+ | This is the file wherer you can declare validation for certain inputs
+ |--------------------------------------------------------------------------
+ */
 const util                          = require('util')
     , mongoose                      = require('mongoose')
     , User                          = mongoose.model('User')
-    , { check, validationResult }   = require('express-validator/check');
+    , { check }                     = require('express-validator/check');
 
 
 let validation = {

@@ -1,43 +1,43 @@
+/**
+ |--------------------------------------------------------------------------
+ | Middleware - Authentication
+ |--------------------------------------------------------------------------
+ |
+ | A middleware to validate API requests by JSON token
+ |
+ */
 const jwt     = require('express-jwt')
     , secret  = require('../config/main').jwt_secret;
 
-/**
- * Read Json Web Token from request header object
- * @param req
- * @returns {*}
- */
-function getTokenFromHeader(req) {
-  // look for header named "authorization" with value of "Token" or "Bearer"
-  if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Token' ||
-      req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+let auth = {
+    /**
+     |--------------------------------------------------------------------------
+     | Read JSON token from the request header parameters
+     |--------------------------------------------------------------------------
+     */
+    getTokenFromHeader: function (req) {
+        // look for header named "authorization" with value of "Token" or "Bearer"
+        if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Token' ||
+            req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
 
-    // return the actual token after "Token" or "Bearer"
-    return req.headers.authorization.split(' ')[1];
-  }
-  return null;
-}
+            // return the actual token after "Token" or "Bearer"
+            return req.headers.authorization.split(' ')[1];
+        }
+        return null;
+    },
 
-/**
- |--------------------------------------------------------------------------
- | Authentication middleware
- |--------------------------------------------------------------------------
- |
- | This middleware has two properties, required and optional
- |
- */
+    required: jwt({
+        secret: secret,
+        userProperty: 'payload',
+        getToken: this.getTokenFromHeader
+    }),
 
-var auth = {
-  required: jwt({
-    secret: secret,
-    userProperty: 'payload',
-    getToken: getTokenFromHeader
-  }),
-  optional: jwt({
-    secret: secret,
-    userProperty: 'payload',
-    credentialsRequired: false,
-    getToken: getTokenFromHeader
-  })
+    optional: jwt({
+        secret: secret,
+        userProperty: 'payload',
+        credentialsRequired: false,
+        getToken: this.getTokenFromHeader
+    })
 };
 
 module.exports = auth;
