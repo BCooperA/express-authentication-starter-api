@@ -97,7 +97,7 @@ app.use("/angular", express.static(__dirname + "/app")); // angular files
  |--------------------------------------------------------------------------
  */
 app.get('/', function(req, res, next) {
-    res.status(200).json({ version: 1, message: "API endpoint is: " + req.protocol + '://' + req.get('host') + req.originalUrl + '/api' })
+    res.status(200).json({ version: 1, message: "API endpoint is: " + req.protocol + '://' + req.get('host') + req.originalUrl + 'api' })
 });
 
 app.use(require('./routes/main'));
