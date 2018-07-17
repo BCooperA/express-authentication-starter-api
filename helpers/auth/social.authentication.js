@@ -16,10 +16,8 @@ let socialAuthentication = {
                 return d.reject(err);
             }
             if(user) {
-                return d.reject(user);
+                return d.resolve(user);
             }
-
-            return d.resolve();
         });
         return d.promise;
     },
