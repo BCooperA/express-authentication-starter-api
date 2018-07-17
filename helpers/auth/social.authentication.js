@@ -47,17 +47,14 @@ let socialAuthentication = {
             }]}).then(function(err, user) {
                 console.log("Search ready!");
             if (err) {
-                console.log(err);
-                return d.reject(err);
+                return console.log(err);
+                //return d.reject(err);
             }
 
             if (user) {
-                // if user is found in the database
-                console.log("Found in the database");
-                console.log(user);
-                return d.reject(user);
+                return console.log(user);
             } else {
-                return d.resolve();
+                return console.log("No user was found, create one!");
             }
         });
         return d.promise;
