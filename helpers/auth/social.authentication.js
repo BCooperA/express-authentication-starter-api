@@ -36,6 +36,7 @@ let socialAuthentication = {
     },
 
     findOrFail: function(user) {
+        console.log("OK!");
         let d = Q.defer();
 
         User.findOne({'$or': [{
