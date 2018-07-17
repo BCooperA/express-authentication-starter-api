@@ -152,8 +152,8 @@ passport.use(new TwitterStrategy(authProviders.twitter,
                         'auth.provider': 'twitter',
                         'auth.oauthID': profile.id,
                         'name': {
-                            'first': profile._json.name.substr(0, profile.name.indexOf(' ')),
-                            'last': profile._json.name.substr(1, profile.name.indexOf(' '))
+                            'first': profile._json.name.substr(0, profile._json.name.indexOf(' ')),
+                            'last': profile._json.name.substr(1, profile._json.name.indexOf(' '))
                         },
                         'password': '',
                         'image': profile._json.profile_image_url_https.slice(this.length, -11) + '.jpg',
