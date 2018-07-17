@@ -16,7 +16,7 @@ let socialAuthentication = {
                 return d.reject(err);
             }
             if(user) {
-                return d.resolve(user);
+                return d.resolve(null, user);
             }
             let newSchema = {
                 'auth.provider': 'facebook',
@@ -35,7 +35,7 @@ let socialAuthentication = {
                 if(err)
                     return d.reject(err);
                 else
-                    return d.resolve(createdUser);
+                    return d.resolve(null, createdUser);
             });
         });
         return d.promise;
