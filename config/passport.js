@@ -202,7 +202,7 @@ passport.use(new GoogleStrategy(authProviders.google,
                     // if user is found then log them in
                     return done(null, user);
                 } else {
-                    console.log(user);
+                    return console.log(profile);
                     // if user is not found, create a new user based on their Google account info
                     user = new User({
                         'auth.provider': 'google',
