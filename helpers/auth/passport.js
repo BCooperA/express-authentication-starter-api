@@ -76,12 +76,35 @@ passport.use(new LocalStrategy({ usernameField: 'user[email]', passwordField: 'u
 passport.use(new FacebookStrategy(authProviders.facebook, function(accessToken, refreshToken, profile, done) {
     process.nextTick(function() {
         // search for user in the database based on "oAuth" ID returned by facebook
-        AccountHelper.save(profile).then(function(err, user) {
+        AccountHelper.findByProfile(profile).then(function(err, user) {
             if(err)
                 return done(err);
 
             if(user) {
                 return done(null, user);
+            } else {
+                // if user is not found, create a new user based on their Twitter account info
+                user = new User({
+                    'auth.provider': 'facebook',
+                    'auth.oauthID': profile.id,
+                    'password': '',
+                    'name': {
+                        'first': profile._json.first_name,
+                        'last': profile._json.last_name
+                    },
+                    'email': profile.emails[0].value,
+                    'image': profile.photos[0].value,
+                    'active': 1
+                });
+
+                // save user in the database
+                user.save(function (err) {
+                    if (err) {
+                        return done(err);
+                    } else {
+                        return done(null, user);
+                    }
+                });
             }
         });
     });

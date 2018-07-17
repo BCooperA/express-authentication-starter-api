@@ -8,6 +8,22 @@ let socialAuthentication = {
         return console.log(route.substring(route.lastIndexOf('/')).substring(1));
     },
 
+    findByProfile: function(profile) {
+        let d = Q.defer();
+
+        this.findOrFail(profile).then(function(err, user) {
+            if(err) {
+                return d.reject(err);
+            }
+            if(user) {
+                return d.reject(user);
+            }
+
+            return d.resolve();
+        });
+        return d.promise;
+    },
+
     save: function(newUser) {
         let d = Q.defer();
 
