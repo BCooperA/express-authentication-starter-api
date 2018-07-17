@@ -27,7 +27,7 @@ let socialAuthentication = {
                 'auth.provider': 'facebook'
             }, {
                 'email': user.emails[0].value
-            }]}, function(err, user) {
+            }]}).then(function(err, user) {
             if (err) {
                 return d.reject(err);
             }
