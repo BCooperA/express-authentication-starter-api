@@ -12,22 +12,15 @@ let socialAuthentication = {
         let d = Q.defer();
 
         this.findOrFail(newUser).then(function(err, user) {
-            console.log(newUser);
-
-            this.newUserFromProfile(newUser).then(function(u){
-                console.log(u);
-            });
             if(err)
                 console.log(err);
-            return d.reject(err);
+                return d.reject(err);
 
             if(user) {
                 console.log(user);
                 return d.reject(user);
             } else {
-                let user = this.newUserFromProfile(newUser);
-                return console.log(user);
-
+                return console.log(newUser);
                 User.create(this.newUserFromProfile(newUser)).then(function (err, createdUser) {
                     if (err) {
                         console.log(err);
