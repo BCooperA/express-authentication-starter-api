@@ -18,7 +18,7 @@ let socialAuthentication = {
             if(user) {
                 d.reject(user);
             } else {
-                let newUser = {
+                let newSchema = {
                     'auth.provider': 'facebook',
                     'auth.oauthID': newUser.id,
                     'password': '',
@@ -31,7 +31,7 @@ let socialAuthentication = {
                     'active': 1
                 };
 
-                user.save(newUser).then(function(err, createdUser) {
+                User.create(newSchema).then(function(err, createdUser) {
                    if(err)
                        return d.reject(err);
                    else
