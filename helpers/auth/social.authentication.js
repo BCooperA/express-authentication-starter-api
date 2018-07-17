@@ -12,6 +12,8 @@ let socialAuthentication = {
         let d = Q.defer();
 
         this.findOrFail(newUser).then(function(err, user) {
+            console.log("finding...");
+            console.log(newUser);
             if(err)
                 console.log(err);
             return d.reject(err);
@@ -20,13 +22,13 @@ let socialAuthentication = {
                 console.log(user);
                 return d.reject(user);
             } else {
-                User.create(this.newUserFromProfile(newUser)).then(function (err, user) {
+                User.create(this.newUserFromProfile(newUser)).then(function (err, createdUser) {
                     if (err) {
                         console.log(err);
                         return d.reject(err);
                     } else {
-                        console.log(user);
-                        return d.resolve(user);
+                        console.log(createdUser);
+                        return d.resolve(createdUser);
                     }
                 });
             }
@@ -47,14 +49,16 @@ let socialAuthentication = {
             }]}).then(function(err, user) {
                 console.log("Search ready!");
             if (err) {
-                return console.log(err);
-                //return d.reject(err);
+                console.log(err);
+                return d.reject(err);
             }
 
             if (user) {
-                return console.log(user);
+                console.log(user);
+                return d.reject(user);
             } else {
-                return console.log("No user was found, create one!");
+                console.log("No user was found, create one!");
+                return d.resolve();
             }
         });
         return d.promise;
