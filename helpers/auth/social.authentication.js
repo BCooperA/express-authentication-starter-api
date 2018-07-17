@@ -45,6 +45,7 @@ let socialAuthentication = {
             }, {
                 'email': user.emails[0].value
             }]}).then(function(err, user) {
+                console.log("Search ready!");
             if (err) {
                 console.log(err);
                 return d.reject(err);
