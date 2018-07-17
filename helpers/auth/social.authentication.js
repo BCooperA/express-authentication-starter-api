@@ -12,10 +12,11 @@ let socialAuthentication = {
         let d = Q.defer();
 
         this.findOrFail(newUser).then(function(err, user) {
-            console.log("finding...");
             console.log(newUser);
-            let user2 = this.newUserFromProfile(newUser);
-            console.log(user2);
+
+            this.newUserFromProfile(newUser).then(function(u){
+                console.log(u);
+            });
             if(err)
                 console.log(err);
             return d.reject(err);
@@ -72,7 +73,7 @@ let socialAuthentication = {
     newUserFromProfile: function(profile) {
         let d = Q.defer();
 
-        let user = new User({
+        let user = {
             'auth.provider': 'facebook',
             'auth.oauthID': profile.id,
             'password': '',
@@ -83,7 +84,7 @@ let socialAuthentication = {
             'email': profile.emails[0].value,
             'image': profile.photos[0].value,
             'active': 1
-        });
+        };
 
         d.resolve(user);
 
