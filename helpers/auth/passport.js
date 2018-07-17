@@ -82,17 +82,16 @@ passport.use(new FacebookStrategy(authProviders.facebook, function(accessToken, 
 
             if(user) {
                 return done(null, user);
+            } else {
+
+                this.save(profile).then(function(err, user) {
+                    if(err)
+                        return done(err);
+                    else
+                        return done(null, user);
+                });
             }
         });
-
-        // save user in the database
-        AccountHelper.save(profile)
-            .then(function(err, user) {
-                if(err)
-                    return done(err);
-                else
-                    return done(null, user)
-            });
     });
 }));
 
