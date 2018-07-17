@@ -98,8 +98,8 @@ passport.use(new FacebookStrategy(authProviders.facebook,
                         'auth.oauthID': profile.id,
                         'password': '',
                         'name': {
-                            'first': profile.name.substr(0,str.indexOf(' ')),
-                            'last': profile.name.substr(1,str.indexOf(' '))
+                            'first': profile._json.first_name,
+                            'last': profile._json.last_name
                         },
                         'email': profile.emails[0].value,
                         'image': profile.photos[0].value,
@@ -147,14 +147,13 @@ passport.use(new TwitterStrategy(authProviders.twitter,
                     // if user is found then log them in
                     return done(null, user);
                 }  else {
-                    return console.log(profile);
                     // if user is not found, create a new user based on their Twitter account info
                     user = new User({
                         'auth.provider': 'twitter',
                         'auth.oauthID': profile.id,
                         'name': {
-                            'first': profile._json.first_name,
-                            'last': profile._json.last_name
+                            'first': profile.name.substr(0,str.indexOf(' ')),
+                            'last': profile.name.substr(1,str.indexOf(' '))
                         },
                         'password': '',
                         'image': profile._json.profile_image_url_https.slice(this.length, -11) + '.jpg',
