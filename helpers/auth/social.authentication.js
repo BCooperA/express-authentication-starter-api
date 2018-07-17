@@ -14,13 +14,13 @@ let socialAuthentication = {
         this.findOrFail(newUser).then(function(err, user) {
             if(err)
                 console.log(err);
-                return d.reject(err);
+                d.reject(err);
 
             if(user) {
                 console.log(user);
-                return d.resolve(user);
+                d.resolve(user);
             } else {
-                return console.log(newUser);
+                console.log(newUser);
             }
         });
 
