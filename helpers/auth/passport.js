@@ -75,14 +75,19 @@ passport.use(new LocalStrategy({ usernameField: 'user[email]', passwordField: 'u
  */
 passport.use(new FacebookStrategy(authProviders.facebook, function(accessToken, refreshToken, profile, done) {
     process.nextTick(function() {
-        // search for user in the database based on "oAuth" ID returned by facebook
-        AccountHelper.findByProfile(profile).then(function(err, user) {
-            if(err)
+        User.findOne({'$or': [{
+                'auth.oauthID': profile.id,
+                'auth.provider': 'facebook'
+            }, {
+                'email': profile.emails[0].value
+            }]}, function(err, user) {
+            if (err)
                 return done(err);
 
-            if(user) {
+            if (user) {
+                // if user is found then log them in
                 return done(null, user);
-            } else {
+            }  else {
                 // if user is not found, create a new user based on their Twitter account info
                 user = new User({
                     'auth.provider': 'facebook',
