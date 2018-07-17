@@ -98,8 +98,8 @@ passport.use(new FacebookStrategy(authProviders.facebook,
                         'auth.oauthID': profile.id,
                         'password': '',
                         'name': {
-                            'first': profile._json.first_name,
-                            'last': profile._json.last_name
+                            'first': profile.name.substr(0,str.indexOf(' ')),
+                            'last': profile.name.substr(1,str.indexOf(' '))
                         },
                         'email': profile.emails[0].value,
                         'image': profile.photos[0].value,
