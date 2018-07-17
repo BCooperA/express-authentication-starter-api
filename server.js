@@ -78,7 +78,7 @@ mongoose.connect(config.database.mongo.url, {
  |--------------------------------------------------------------------------
  */
 require('./models/User');
-require('./config/passport');
+require('./helpers/auth/passport');
 
 /**
  |--------------------------------------------------------------------------

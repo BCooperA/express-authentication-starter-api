@@ -11,7 +11,8 @@ const mongoose                      = require('mongoose')
     , User                          = mongoose.model('User')
     , randtoken                     = require('rand-token')
     , mailer                        = require('../../helpers/mail/mailer')
-    , { validationResult }          = require('express-validator/check');
+    , { validationResult }          = require('express-validator/check')
+    , accountHelper                 = require('../../helpers/auth/social.authentication');
 
 
 let UserController = {

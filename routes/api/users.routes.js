@@ -30,7 +30,7 @@ router.get('/user', auth.required, UserController.getByPayload);
  | Retrieves user data based on user id in route parameter
  |
  */
-router.get('/user/:id', auth.required, UserController.getById);
+router.get('/user/:id', UserController.getById);
 
 /**
  |--------------------------------------------------------------------------

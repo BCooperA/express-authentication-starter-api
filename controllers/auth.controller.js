@@ -10,7 +10,8 @@
 
 const mongoose        = require('mongoose')
     , User            = mongoose.model('User')
-    , passport        = require('passport');
+    , passport        = require('passport')
+    , accountHelper   = require('../helpers/auth/social.authentication');
 
 let AuthController = {
     /**
@@ -21,23 +22,22 @@ let AuthController = {
      */
     local: function(req, res, next) {
         if(req.body.user.email === '' || req.body.user.password === '')
-            // overrides passports own error handler
+        // overrides passports own error handler
             return res.status(422).json({errors: [{ msg: 'Missing credentials'}]});
 
         passport.authenticate('local', { session: false }, function(err, user, info) {
             if(err)
                 return next(err);
 
-            if(user) {
-                // generate JSON web token to user
-                user.token = user.generateJWT();
-
-                // return user object
-                return res.status(200).json({ user: user.toAuthJSON() });
-            } else {
-                // return any errors
+            if(!user)
+                // return validation errors
                 return res.status(422).json(info);
-            }
+
+            // generate JSON web token to user
+            user.token = user.generateJWT();
+
+            // return user object
+            return res.status(200).json({ user: user.toAuthJSON() });
         })(req, res, next);
     },
     /**
@@ -52,16 +52,6 @@ let AuthController = {
                 return next(err);
 
             user.token = user.generateJWT();
-            // var userCookie = JSON.stringify({
-            //     'id': user._id,
-            //     'token': user.token
-            // });
-
-            // send user data as JSON in cookie and redirect
-            // res.cookie('user', userCookie);
-
-            //res.redirect('/app/dashboard');
-            // return user object
             return res.status(200).json({ user: user.toAuthJSON() });
         })(req, res, next);
     },
@@ -78,19 +68,6 @@ let AuthController = {
                 return next(err);
 
             user.token = user.generateJWT();
-
-
-            // var userCookie = JSON.stringify({
-            //     'id': user._id,
-            //     'token': user.token
-            // });
-            //
-            // // save user data as JSON in cookie and redirect
-
-            // res.cookie('user', userCookie);
-            // // res.redirect('/app/dashboard');
-
-            // return user object
             return res.status(200).json({ user: user.toAuthJSON() });
         })(req, res, next);
     },
@@ -108,17 +85,6 @@ let AuthController = {
                 return next(err);
 
             user.token = user.generateJWT();
-            // var userCookie = JSON.stringify({
-            //     'id': user._id,
-            //     'token': user.token
-            // });
-            //
-            // // save user data as JSON in cookie and redirect
-            // res.cookie('user', userCookie);
-
-            //res.redirect('/app/dashboard');
-
-            // return user object
             return res.status(200).json({ user: user.toAuthJSON() });
         })(req, res, next);
     }
