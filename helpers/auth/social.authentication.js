@@ -54,10 +54,10 @@ let socialAuthentication = {
 
             if (user) {
                 console.log(user);
-                return d.reject(user);
+                return d.resolve(user);
             } else {
                 console.log("No user was found, create one!");
-                return d.resolve();
+                return true;
             }
         });
         return d.promise;
