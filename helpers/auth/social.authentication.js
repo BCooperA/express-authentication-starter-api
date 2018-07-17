@@ -52,15 +52,14 @@ let socialAuthentication = {
             }, {
                 'email': profile.emails[0].value
             }]}).then(function(err, user) {
-            console.log("Search ready!");
             if (err) {
                 console.log(err);
-                d.reject(err);
+                return d.reject(err);
             }
 
             if (user) {
                 console.log(user);
-                d.reject(user);
+                return d.reject(user);
             } else {
                 console.log("No user was found, create one!");
                 d.resolve(profile);
