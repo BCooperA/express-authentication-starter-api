@@ -21,15 +21,6 @@ let socialAuthentication = {
                 return d.resolve(user);
             } else {
                 return console.log(newUser);
-                User.create(this.newUserFromProfile(newUser)).then(function (err, createdUser) {
-                    if (err) {
-                        console.log(err);
-                        return d.reject(err);
-                    } else {
-                        console.log(createdUser);
-                        return d.resolve(createdUser);
-                    }
-                });
             }
         });
 
@@ -49,15 +40,15 @@ let socialAuthentication = {
                 console.log("Search ready!");
             if (err) {
                 console.log(err);
-                return d.reject(err);
+                d.reject(err);
             }
 
             if (user) {
                 console.log(user);
-                return d.resolve(user);
+                d.reject(user);
             } else {
                 console.log("No user was found, create one!");
-                return true;
+                d.resolve();
             }
         });
         return d.promise;
