@@ -78,20 +78,24 @@ passport.use(new FacebookStrategy(authProviders.facebook, function(accessToken, 
         // search for user in the database based on "oAuth" ID returned by facebook
         AccountHelper.findOrFail(profile).then(function(err, user) {
             if(err)
-                done(err);
+                return done(err);
 
-            if(user)
-                done(null, user);
+            if(user) {
+                return done(null, user);
+            } else {
+                // save user in the database
+                AccountHelper.save(profile)
+                    .then(function(err, user) {
+                        if(err)
+                            return done(err);
+
+                        return done(null, user)
+                    });
+            }
+
         });
 
-        // save user in the database
-        AccountHelper.save(profile)
-            .then(function(err, user) {
-                if(err)
-                    return done(err);
 
-                return done(null, user)
-            });
     });
 }));
 

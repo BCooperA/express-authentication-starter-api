@@ -34,7 +34,7 @@ let socialAuthentication = {
 
             if (user) {
                 // if user is found in the database
-                return d.resolve(user);
+                return d.reject(user);
             }
         });
         return d.promise;
