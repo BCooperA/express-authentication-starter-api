@@ -52,8 +52,9 @@ let socialAuthentication = {
 
             if (user) {
                 // if user is found in the database
+                console.log("Found in the database")!
                 console.log(user);
-                return d.resolve(user);
+                return d.reject(user);
             } else {
                 return d.resolve();
             }
