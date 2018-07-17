@@ -13,14 +13,11 @@ let socialAuthentication = {
 
         this.findOrFail(newUser).then(function(err, user) {
             if(err)
-                console.log(err);
                 d.reject(err);
 
             if(user) {
-                console.log(user);
                 d.reject(user);
             } else {
-                console.log(newUser);
                 let user = {
                     'auth.provider': 'facebook',
                     'auth.oauthID': newUser.id,
@@ -36,9 +33,9 @@ let socialAuthentication = {
 
                 User.create(user).then(function(err, createdUser) {
                    if(err)
-                       d.reject(err);
+                       return d.reject(err);
                    else
-                       d.resolve(createdUser);
+                       return d.resolve(createdUser);
                 });
             }
         });
