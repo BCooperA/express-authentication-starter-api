@@ -16,6 +16,7 @@ let socialAuthentication = {
                 return d.reject(err);
             }
             if(user) {
+                console.log("OK");
                 return d.resolve(user);
             }
             let newSchema = {
