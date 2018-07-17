@@ -18,7 +18,7 @@ let socialAuthentication = {
 
             if(user) {
                 console.log(user);
-                return d.reject(user);
+                return d.resolve(user);
             } else {
                 return console.log(newUser);
                 User.create(this.newUserFromProfile(newUser)).then(function (err, createdUser) {
