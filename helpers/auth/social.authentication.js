@@ -42,15 +42,15 @@ let socialAuthentication = {
         return d.promise;
     },
 
-    findOrFail: function(user) {
+    findOrFail: function(profile) {
         console.log("OK!");
         let d = Q.defer();
 
         User.findOne({'$or': [{
-                'auth.oauthID': user.id,
+                'auth.oauthID': profile.id,
                 'auth.provider': 'facebook'
             }, {
-                'email': user.emails[0].value
+                'email': profile.emails[0].value
             }]}).then(function(err, user) {
             console.log("Search ready!");
             if (err) {
