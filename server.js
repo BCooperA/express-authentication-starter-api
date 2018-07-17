@@ -43,10 +43,10 @@ app.use(passport.initialize());                         // initialize passport s
  |--------------------------------------------------------------------------
  | Session based authentication
  |--------------------------------------------------------------------------
- | Use these if you are developing a session based authentication
+ | Use these if you are developing a session based authentication (required for oAuth based authentication)
  */
 app.use(session({ secret: config.session_secret, cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false  }));
-app.use(passport.session()); // required for oAuth based authentication
+app.use(passport.session());
 
 
 /**
@@ -82,17 +82,6 @@ require('./config/passport');
 
 /**
  |--------------------------------------------------------------------------
- | Static files for front end
- |--------------------------------------------------------------------------
- */
-app.use("/js", express.static(__dirname + "/public/js")); // javascript files
-app.use("/fonts", express.static(__dirname + "/public/fonts")); // fonts
-app.use("/css", express.static(__dirname + "/public/styles")); // stylesheets
-app.use("/img", express.static(__dirname + "/public/img")); // images
-app.use("/angular", express.static(__dirname + "/app")); // angular files
-
-/**
- |--------------------------------------------------------------------------
  | Routes
  |--------------------------------------------------------------------------
  */
@@ -104,7 +93,20 @@ app.use(require('./routes/main'));
 
 /**
  |--------------------------------------------------------------------------
- | Front end routes
+ | Front end - handle static files
+ |--------------------------------------------------------------------------
+ | NOTE! uncomment this only if you have declared static files
+ |--------------------------------------------------------------------------
+ */
+// app.use("/js", express.static(__dirname + "/public/js")); // javascript files
+// app.use("/fonts", express.static(__dirname + "/public/fonts")); // fonts
+// app.use("/css", express.static(__dirname + "/public/styles")); // stylesheets
+// app.use("/img", express.static(__dirname + "/public/img")); // images
+// app.use("/angular", express.static(__dirname + "/app")); // angular files
+
+/**
+ |--------------------------------------------------------------------------
+ | Front end - routing
  |--------------------------------------------------------------------------
  | NOTE! uncomment this only if you are developing an SPA (single page application)
  |--------------------------------------------------------------------------
@@ -112,6 +114,7 @@ app.use(require('./routes/main'));
 // app.get('*', function(req, res, next) {
 //     res.sendFile("./app/index.html", { root: __dirname });
 // });
+
 /**
  |--------------------------------------------------------------------------
  | Response headers
