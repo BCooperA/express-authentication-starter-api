@@ -18,9 +18,28 @@ let socialAuthentication = {
 
             if(user) {
                 console.log(user);
-                d.resolve(user);
+                d.reject(user);
             } else {
                 console.log(newUser);
+                let user = {
+                    'auth.provider': 'facebook',
+                    'auth.oauthID': newUser.id,
+                    'password': '',
+                    'name': {
+                        'first': newUser._json.first_name,
+                        'last': newUser._json.last_name
+                    },
+                    'email': newUser.emails[0].value,
+                    'image': newUser.photos[0].value,
+                    'active': 1
+                };
+
+                User.create(user).then(function(err, createdUser) {
+                   if(err)
+                       d.reject(err);
+                   else
+                       d.resolve(createdUser);
+                });
             }
         });
 
