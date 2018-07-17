@@ -74,9 +74,7 @@ let socialAuthentication = {
 
             if (user) {
                 console.log(user);
-                return d.reject(user);
-            } else {
-                return d.resolve();
+                return d.resolve(user);
             }
         });
         return d.promise;
