@@ -151,7 +151,10 @@ passport.use(new TwitterStrategy(authProviders.twitter,
                     user = new User({
                         'auth.provider': 'twitter',
                         'auth.oauthID': profile.id,
-                        'name': profile.displayName,
+                        'name': {
+                            'first': profile._json.first_name,
+                            'last': profile._json.last_name
+                        },
                         'password': '',
                         'image': profile._json.profile_image_url_https.slice(this.length, -11) + '.jpg',
                         'email': profile.emails[0].value,
@@ -203,7 +206,10 @@ passport.use(new GoogleStrategy(authProviders.google,
                     user = new User({
                         'auth.provider': 'google',
                         'auth.oauthID': profile.id,
-                        'name': profile.displayName,
+                        'name': {
+                            'first': profile._json.first_name,
+                            'last': profile._json.last_name
+                        },
                         'password': '',
                         'image': profile.photos[0].value.slice(0, -2) + '200',
                         'email': profile.emails[0].value,
