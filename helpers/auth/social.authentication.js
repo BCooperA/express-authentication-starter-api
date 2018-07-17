@@ -12,34 +12,32 @@ let socialAuthentication = {
         let d = Q.defer();
 
         this.findOrFail(newUser).then(function(err, user) {
-            if(err)
+            if(err) {
                 return d.reject(err);
-
-            if(user) {
-                return d.reject(user);
-            } else {
-                let newSchema = {
-                    'auth.provider': 'facebook',
-                    'auth.oauthID': newUser.id,
-                    'password': '',
-                    'name': {
-                        'first': newUser._json.first_name,
-                        'last': newUser._json.last_name
-                    },
-                    'email': newUser.emails[0].value,
-                    'image': newUser.photos[0].value,
-                    'active': 1
-                };
-
-                User.create(newSchema).then(function(err, createdUser) {
-                   if(err)
-                       return d.reject(err);
-                   else
-                       return d.resolve(createdUser);
-                });
             }
-        });
+            if(user) {
+                return d.resolve(user);
+            }
+            let newSchema = {
+                'auth.provider': 'facebook',
+                'auth.oauthID': newUser.id,
+                'password': '',
+                'name': {
+                    'first': newUser._json.first_name,
+                    'last': newUser._json.last_name
+                },
+                'email': newUser.emails[0].value,
+                'image': newUser.photos[0].value,
+                'active': 1
+            };
 
+            User.create(newSchema).then(function(err, createdUser) {
+                if(err)
+                    d.reject(err);
+                else
+                    d.resolve(createdUser);
+            });
+        });
         return d.promise;
     },
 
@@ -53,7 +51,7 @@ let socialAuthentication = {
             }, {
                 'email': user.emails[0].value
             }]}).then(function(err, user) {
-                console.log("Search ready!");
+            console.log("Search ready!");
             if (err) {
                 console.log(err);
                 d.reject(err);
