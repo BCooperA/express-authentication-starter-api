@@ -13,10 +13,10 @@ let socialAuthentication = {
 
         this.findOrFail(newUser).then(function(err, user) {
             if(err)
-                d.reject(err);
+                return d.reject(err);
 
             if(user) {
-                d.reject(user);
+                return d.reject(user);
             } else {
                 let newSchema = {
                     'auth.provider': 'facebook',
@@ -61,7 +61,7 @@ let socialAuthentication = {
 
             if (user) {
                 console.log(user);
-                d.reject(user);
+                d.resolve(user);
             } else {
                 console.log("No user was found, create one!");
                 d.resolve();
