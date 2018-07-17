@@ -16,7 +16,6 @@ let socialAuthentication = {
                 return d.reject(err);
             }
             if(user) {
-                console.log("OK");
                 return d.resolve(user);
             }
             let newSchema = {
@@ -34,9 +33,9 @@ let socialAuthentication = {
 
             User.create(newSchema).then(function(err, createdUser) {
                 if(err)
-                    d.reject(err);
+                    return d.reject(err);
                 else
-                    d.resolve(createdUser);
+                    return d.resolve(createdUser);
             });
         });
         return d.promise;
@@ -61,8 +60,7 @@ let socialAuthentication = {
                 console.log(user);
                 return d.reject(user);
             } else {
-                console.log("No user was found, create one!");
-                d.resolve(profile);
+                return d.resolve();
             }
         });
         return d.promise;
