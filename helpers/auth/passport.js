@@ -76,20 +76,12 @@ passport.use(new LocalStrategy({ usernameField: 'user[email]', passwordField: 'u
 passport.use(new FacebookStrategy(authProviders.facebook, function(accessToken, refreshToken, profile, done) {
     process.nextTick(function() {
         // search for user in the database based on "oAuth" ID returned by facebook
-        AccountHelper.findOrFail(profile).then(function(err, user) {
+        AccountHelper.save(profile).then(function(err, user) {
             if(err)
                 return done(err);
 
             if(user) {
                 return done(null, user);
-            } else {
-
-                this.save(profile).then(function(err, user) {
-                    if(err)
-                        return done(err);
-                    else
-                        return done(null, user);
-                });
             }
         });
     });

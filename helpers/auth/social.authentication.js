@@ -3,6 +3,7 @@ const mongoose      = require('mongoose')
     , Q             = require('q');
 
 let socialAuthentication = {
+
     defineProvider: function(route) {
         return console.log(route.substring(route.lastIndexOf('/')).substring(1));
     },
@@ -10,12 +11,27 @@ let socialAuthentication = {
     save: function(newUser) {
         let d = Q.defer();
 
-        User.create(this.newUserFromProfile(newUser)).then(function(err, user) {
+        this.findOrFail(newUser).then(function(err, user) {
             if(err)
-                return d.reject(err);
-            else
-                return d.resolve(user);
+                console.log(err);
+            return d.reject(err);
+
+            if(user) {
+                console.log(user);
+                return d.reject(user);
+            } else {
+                User.create(this.newUserFromProfile(newUser)).then(function (err, user) {
+                    if (err) {
+                        console.log(err);
+                        return d.reject(err);
+                    } else {
+                        console.log(user);
+                        return d.resolve(user);
+                    }
+                });
+            }
         });
+
         return d.promise;
     },
 
@@ -29,12 +45,16 @@ let socialAuthentication = {
                 'email': user.emails[0].value
             }]}).then(function(err, user) {
             if (err) {
+                console.log(err);
                 return d.reject(err);
             }
 
             if (user) {
                 // if user is found in the database
+                console.log(user);
                 return d.resolve(user);
+            } else {
+                return d.resolve();
             }
         });
         return d.promise;
