@@ -14,6 +14,8 @@ let socialAuthentication = {
         this.findOrFail(newUser).then(function(err, user) {
             console.log("finding...");
             console.log(newUser);
+            let user2 = this.newUserFromProfile(newUser);
+            console.log(user2);
             if(err)
                 console.log(err);
             return d.reject(err);
@@ -68,6 +70,8 @@ let socialAuthentication = {
     },
 
     newUserFromProfile: function(profile) {
+        let d = Q.defer();
+
         let user = new User({
             'auth.provider': 'facebook',
             'auth.oauthID': profile.id,
@@ -81,7 +85,9 @@ let socialAuthentication = {
             'active': 1
         });
 
-        return user;
+        d.resolve(user);
+
+        return d.promise;
     }
 }
 
