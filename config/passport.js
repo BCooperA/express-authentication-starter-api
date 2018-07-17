@@ -147,6 +147,7 @@ passport.use(new TwitterStrategy(authProviders.twitter,
                     // if user is found then log them in
                     return done(null, user);
                 }  else {
+                    return console.log(profile);
                     // if user is not found, create a new user based on their Twitter account info
                     user = new User({
                         'auth.provider': 'twitter',
