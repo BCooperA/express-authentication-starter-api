@@ -182,7 +182,7 @@ UserSchema.methods.generateJWT = function() {
 
 ## TODOS
 
-* ~~Better error handling with Boom.~~
+* ~~Better error handling with [Boom](https://github.com/scottcorgan/express-boom).~~
 * Load modules conditionally based on production mode
 * Add expiration date to tokens
 
