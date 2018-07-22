@@ -22,39 +22,44 @@ const UserSchema = new mongoose.Schema({
         provider: String,
         oauthID: Number,
     },
-    email: {
-        type: String,
-        unique: true,
-        lowercase: true,
-        required: [true, "can't be blank"],
-        match: [/\S+@\S+\.\S+/, 'is invalid'],
-        index: true,
-    },
-    name: {
-        first: {
-            type: String,
-            required: true
+
+    account: {
+        active: {
+            type: Number,
+            default: 0,
         },
-        last: {
+        email: {
             type: String,
-            required: true
+            unique: true,
+            lowercase: true,
+            required: [true, "can't be blank"],
+            match: [/\S+@\S+\.\S+/, 'is invalid'],
+            index: true,
+        },
+        password: {
+            type: String
+        },
+        name: {
+            givenName: {
+                type: String,
+                required: true
+            },
+            familyName: {
+                type: String,
+                required: true
+            }
+        },
+        image: String,
+    },
+    tokens: {
+        activation: {
+            type: String,
+            default: ''
+        },
+        reset: {
+            type: String,
+            default: ''
         }
-    },
-    image: String,
-    password: {
-        type: String
-    },
-    password_reset_token: {
-        type: String,
-        default: ''
-    },
-    activation_token: {
-        type: String,
-        default: ''
-    },
-    active: {
-        type: Number,
-        default: 0,
     }
 }, {
     timestamps: true
@@ -66,7 +71,7 @@ const UserSchema = new mongoose.Schema({
  * @returns {boolean}
  */
 UserSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.password);
+    return bcrypt.compareSync(password, this.account.password);
 };
 
 /**
@@ -76,13 +81,12 @@ UserSchema.pre('save', function(next) {
     var user = this;
 
     // only hash the password if it has been modified (or is new)
-    if (!user.isModified('password'))
+    if (!user.isModified('account.password'))
         return next();
 
-    user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(SALT_WORK_FACTOR), null);
+    user.account.password = bcrypt.hashSync(user.account.password, bcrypt.genSaltSync(SALT_WORK_FACTOR), null);
     next();
 });
-
 
 /**
  * Generates JSON Web Token (JWT) for authenticated user

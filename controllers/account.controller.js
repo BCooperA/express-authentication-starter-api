@@ -12,7 +12,8 @@ const mongoose                      = require('mongoose')
     , User                          = mongoose.model('User')
     , randtoken                     = require('rand-token')
     , mailer                        = require('../helpers/mail/mailer')
-    , { validationResult }          = require('express-validator/check');
+    , { validationResult }          = require('express-validator/check')
+    , boom                          = require('boom');
 
 let AccountController = {
     /**
@@ -22,16 +23,16 @@ let AccountController = {
      |
      */
     activateUser: function(req, res, next) {
-        User.findOne({ activation_token: new RegExp('^'+ req.params.token +'$', "i")}, function( err, user ) {
+        User.findOne({ "tokens.activation": new RegExp('^'+ req.params.token +'$', "i")}, function( err, user ) {
             if (err)
                 return next(err);
 
             if(!user)
             // invalid activation token
-                return res.status(422).json({ errors: [{ msg:  'invalid activation token' }] });
+                return res.boom.badData('Invalid activation token');
 
-            user.activation_token = '';
-            user.active = 1;
+            user.tokens.activation = '';
+            user.account.active = 1;
             user.save();
 
             return res.status(200).json({ status: 'OK' });
@@ -47,13 +48,13 @@ let AccountController = {
      |
      */
     recoverUser: function(req, res, next) {
-        User.findOne( { email: new RegExp('^'+ req.body.user.email +'$', "i") }, function(err, user) {
+        User.findOne( { "account.email": new RegExp('^'+ req.body.user.email +'$', "i") }, function(err, user) {
             if(err)
                 return next(err);
 
             if(req.body.user.email === '' || !user)
             // invalid or empty email address
-                return res.status(422).json({ errors: [{ msg: 'invalid e-mail address' }] });
+                return res.boom.badData('Invalid e-mail address');
 
             // generate a request token for password reset
             user.request_password_token = randtoken.generate(32);
@@ -70,7 +71,7 @@ let AccountController = {
                         return res.status(200).json({ status: 'OK' });
                     }, function (err) {
                         if (err) {
-                            return res.status(500).send({ errors: [{ msg: err.message } ] });
+                            return res.boom.badImplementation(err.message);
                         }
                     });
             });
@@ -88,20 +89,20 @@ let AccountController = {
         // return validation errors
             return res.status(422).json({ errors: errors.array() });
 
-        User.findOne({ password_reset_token: new RegExp('^'+ req.params.token +'$', "i") }, function(err, user) {
+        User.findOne({ "tokens.reset": new RegExp('^'+ req.params.token +'$', "i") }, function(err, user) {
             if (err)
                 return next(err);
 
             if (!user)
             // reset token not provided or invalid
-                return res.status(422).json({ errors: [{ msg: 'invalid reset token' }] });
+                return res.boom.badData('Invalid reset token');
 
             if(req.body.user.password !== req.body.user.passwordVrf)
             // passwords don't match
-                return res.status(422).json({ errors: [{ msg: 'passwords don\'t match' }] });
+                return res.boom.badData('Passwords don\'t match');
 
-            user.password_reset_token = '';
-            user.password = req.body.user.password;
+            user.tokens.reset = '';
+            user.account.password = req.body.user.password;
 
             return user.save().then(function () {
                 return res.status(200).json({ status: 'OK' });
@@ -116,7 +117,7 @@ let AccountController = {
      |
      */
     checkEmail: function(req, res, next) {
-        User.findOne({ email: req.params.email }, function(err, user) {
+        User.findOne({ "account.email": req.params.email }, function(err, user) {
             if(err)
                 next(err);
 
@@ -125,7 +126,7 @@ let AccountController = {
                 return res.status(200).json({ status: 'OK' });
             else
             // e-mail was found in the database
-                return res.status(422).json({ errors: [{ msg: 'e-mail address already in use' }] });
+                return res.boom.badData('E-mail address already in use');
         });
     }
 };

@@ -10,7 +10,8 @@ const express             = require('express')
     , mongoose            = require('mongoose')
     , helmet              = require('helmet')
     , cookieParser        = require('cookie-parser')
-    , config              = require('./config/main');
+    , config              = require('./config/main')
+    , boom                = require('express-boom');
 
 /**
  |--------------------------------------------------------------------------
@@ -38,14 +39,14 @@ app.use(bodyParser.urlencoded({ extended: true }));     // returns middleware th
 app.use(bodyParser.json());                             // returns middleware that only parses json
 app.use(require('method-override')());                  // Lets you use HTTP verbs such as PUT or DELETE in places where the client doesn't support it.
 app.use(passport.initialize());                         // initialize passport strategies
-
+app.use(boom());
 /**
  |--------------------------------------------------------------------------
  | Session based authentication
  |--------------------------------------------------------------------------
  | Use these if you are developing a session based authentication (required for oAuth based authentication)
  */
-app.use(session({ secret: config.session_secret, cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false  }));
+app.use(session(config.session));
 app.use(passport.session());
 
 
@@ -70,6 +71,12 @@ mongoose.Promise = global.Promise; //  mongoose's default promise library is dep
 mongoose.connect(config.database.mongo.url, {
     useMongoClient: true,
     promiseLibrary: require('bluebird')
+});
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback () {
+    console.log("Mongoose listening on port " + db.port);
 });
 
 /**
@@ -132,48 +139,24 @@ app.use(function(req, res, next) {
 /**
  |--------------------------------------------------------------------------
  | Error Handlers
+ |
  |--------------------------------------------------------------------------
- */
-
-/**
- |--------------------------------------------------------------------------
- | Error Handler - Validation Errors
- |--------------------------------------------------------------------------
- | Handle validation errors as JSON
- */
-app.use(function(err, req, res, next) {
-    if(err.name === 'ValidationError') {
-        res.status(422).json({
-            errors: Object.keys(err.errors).reduce(function(errors, key) {
-                errors[key] = err.errors[key].message;
-
-                return errors;
-            }, {})
-        });
-
-    }
-    return next(err);
-});
-
-/**
- |--------------------------------------------------------------------------
- | 401 - Unauthorized
+ | 401 - unauthorized request
  |--------------------------------------------------------------------------
  */
 app.use(function(err, req, res, next) {
-    if(err.name === "UnauthorizedError") {
-        res.status(401).json({errors: [{ msg: err.message }]});
+    if(err.name === "UnauthorizedError" &&  err.status === 401) {
+        res.boom.unauthorized("Unauthorized request");
+        //res.status(401).json({errors: [{ msg: err.message }]});
     }
 });
 /**
  |--------------------------------------------------------------------------
- | 404 - Not Found
+ | 404 - not found
  |--------------------------------------------------------------------------
  */
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+app.use(function (req, res) {
+    res.boom.notFound('Not Found'); // Responds with a 404 status code
 });
 /**
  |--------------------------------------------------------------------------

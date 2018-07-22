@@ -6,14 +6,23 @@
  |
  */
 module.exports = {
-    jwt_secret: process.env.JWT_SECRET,
-    session_secret: process.env.SESSION_SECRET,
+    session: {
+        secret: process.env.SESSION_SECRET,
+        cookie: {
+            maxAge: 60000
+        },
+        resave: false,
+        saveUninitialized: false
+    },
 
+    jwt_secret: process.env.JWT_SECRET,
     database: {
         mongo: {
             url: process.env.MONGO_URL
         }
     },
+
+
     auth: {
         providers: {
             facebook: {

@@ -29,10 +29,10 @@ let validation = {
             .isEmail().withMessage('Invalid e-mail address.')
             .isLength({ max: 256 }).withMessage('Email is too long.')
             .custom(value => {
-                    return User.findOne({email: value}).then(user => {
-                        if(user)
-                            return Promise.reject('E-mail already in use');
-                    })
+                return User.findOne({email: value}).then(user => {
+                    if(user)
+                        return Promise.reject('E-mail already in use');
+                })
             })
     ),
     /**
@@ -41,6 +41,7 @@ let validation = {
      |--------------------------------------------------------------------------
      | Must pass the following rules:
      |  - is not an empty string
+     |  - must not contain any numbers
      |  - is a minimum of 2 characters long
      |  - is under 30 characters long
      |--------------------------------------------------------------------------
@@ -48,6 +49,7 @@ let validation = {
     firstName: util.promisify(
         check('user.firstName')
             .not().isEmpty().withMessage('Provide your real name')
+            .isAlpha().withMessage('Name must not contain numbers')
             .isLength({ min: 2 }).withMessage('First name is too short.')
             .isLength({ max: 30 }).withMessage('First name is too long.')
     ),
@@ -58,6 +60,7 @@ let validation = {
      |--------------------------------------------------------------------------
      | Must pass the following rules:
      |  - is not an empty string
+     |  - must not contain any numbers
      |  - is a minimum of 2 characters long
      |  - is under 50 characters long
      |--------------------------------------------------------------------------
@@ -65,6 +68,7 @@ let validation = {
     lastName: util.promisify(
         check('user.lastName')
             .not().isEmpty().withMessage('Provide your real name')
+            .isAlpha().withMessage('Name must not contain numbers')
             .isLength({ min: 2 }).withMessage('Last name is too short.')
             .isLength({ max: 50 }).withMessage('Last name is too long.')
     ),

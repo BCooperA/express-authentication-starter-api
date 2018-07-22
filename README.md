@@ -74,21 +74,10 @@ npm run dev
 | PUT | /api/user            |                                    | Updates user data
 | POST  | /api/users         |                                    | Creates new user |
 
-## Error handling 
-By default, errors are returned as JSON in following format:
-
-```
-{
-  "errors": [
-    {
-      "msg": "Error message"
-    }
-  ]
-}
-```
-
 
 ## Configuration
+
+### Token expiration
 By default the JWT token expires in 60 minutes. If you want to extend the lifetime of this token, adjust the `exp` property of the JWT:
 
 ```
@@ -110,6 +99,47 @@ UserSchema.methods.generateJWT = function() {
 
 ```
 
+### User Model
+By default, the `User` model will have a following schema:
+
+```
+{
+	"_id" : ObjectId("5b54ff68e1f46c527ad9fd64"),
+	"updatedAt" : ISODate("2018-07-22T22:04:24.967Z"),
+	"createdAt" : ISODate("2018-07-22T22:04:24.967Z"),
+	"tokens" : {
+		"reset" : "",
+		"activation" : "dPr1Rc654dIcjmeQhoF213z6Pv9NoFtM"
+	},
+	"account" : {
+		"password" : "$2a$10$DtHlTExi3c5jKlP5y2SWvOtP7QcJNodoi30QglWQ/cL0r5cT3FcDC",
+		"email" : "test@user.com",
+		"name" : {
+			"familyName" : "John",
+			"givenName" : "Doe"
+		},
+		"active" : 0
+	},
+	"__v" : 0
+}
+```
+
+### Error handling 
+By default, errors are returned as JSON in following format:
+
+```
+{
+"statusCode": 404,
+"error": "Not Found",
+"message": "Not Found"
+}
+```
+
+## TODOS
+
+* ~~Better error handling with Boom.~~
+* Load modules conditionally based on production mode
+* Add expiration date to tokens
 
 
 

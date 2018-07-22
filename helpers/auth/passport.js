@@ -43,19 +43,19 @@ passport.deserializeUser(function(id, done) {
  */
 passport.use(new LocalStrategy({ usernameField: 'user[email]', passwordField: 'user[password]' },
     function(email, password, done) {
-        User.findOne({email: email}, function (err, user) {
+        User.findOne({ "account.email": email}, function (err, user) {
             if(err)
                 return done(err);
 
             // incorrect credentials
-            if (!user || !user.validPassword(password) || user.password === '') {
-                return done(null, false, { errors: [{ msg: "Incorrect credentials" }] });
+            if (!user || !user.validPassword(password) || user.account.password === '') {
+                return done(null, false, { msg: "Incorrect credentials" });
             }
 
             // inactive account
-            if(user.activation_token !== '' || user.active === 0) {
+            if(user.tokens.activation !== '' || user.account.active === 0) {
                 // account is not activated
-                return done(null, false, { errors: [{ msg: "Inactive account" }] });
+                return done(null, false, { msg: "Inactive account" });
             }
 
             // all good
@@ -76,10 +76,10 @@ passport.use(new LocalStrategy({ usernameField: 'user[email]', passwordField: 'u
 passport.use(new FacebookStrategy(authProviders.facebook, function(accessToken, refreshToken, profile, done) {
     process.nextTick(function() {
         User.findOne({'$or': [{
-                'auth.oauthID': profile.id,
-                'auth.provider': 'facebook'
+                "auth.oauthID": profile.id,
+                "auth.provider": "facebook"
             }, {
-                'email': profile.emails[0].value
+                "account.email": profile.emails[0].value
             }]}, function(err, user) {
             if (err)
                 return done(err);
@@ -90,16 +90,16 @@ passport.use(new FacebookStrategy(authProviders.facebook, function(accessToken, 
             }  else {
                 // if user is not found, create a new user based on their Twitter account info
                 user = new User({
-                    'auth.provider': 'facebook',
-                    'auth.oauthID': profile.id,
-                    'password': '',
-                    'name': {
-                        'first': profile._json.first_name,
-                        'last': profile._json.last_name
+                    "auth.provider": "facebook",
+                    "auth.oauthID": profile.id,
+                    "account.active": 1,
+                    "account.email": profile.emails[0].value,
+                    "account.password": "",
+                    "account.name": {
+                        "givenName": profile._json.first_name,
+                        "familyName": profile._json.last_name
                     },
-                    'email': profile.emails[0].value,
-                    'image': profile.photos[0].value,
-                    'active': 1
+                    "account.image": profile.photos[0].value
                 });
 
                 // save user in the database
@@ -128,10 +128,10 @@ passport.use(new FacebookStrategy(authProviders.facebook, function(accessToken, 
 passport.use(new TwitterStrategy(authProviders.twitter, function(token, tokenSecret, profile, done) {
     process.nextTick(function() {
         User.findOne({'$or': [{
-                'auth.oauthID': profile.id,
-                'auth.provider': 'twitter'
+                "auth.oauthID": profile.id,
+                "auth.provider": "twitter"
             }, {
-                'email': profile.emails[0].value
+                "account.email": profile.emails[0].value
             }]}, function(err, user) {
             if (err)
                 return done(err);
@@ -142,16 +142,16 @@ passport.use(new TwitterStrategy(authProviders.twitter, function(token, tokenSec
             }  else {
                 // if user is not found, create a new user based on their Twitter account info
                 user = new User({
-                    'auth.provider': 'twitter',
-                    'auth.oauthID': profile.id,
-                    'name': {
-                        'first': profile._json.name.substr(0, profile._json.name.indexOf(' ')),
-                        'last': profile._json.name.substr(1, profile._json.name.indexOf(' '))
+                    "auth.provider": "twitter",
+                    "auth.oauthID": profile.id,
+                    "account.active": 1,
+                    "account.email": profile.emails[0].value,
+                    "account.password": "",
+                    "account.name": {
+                        "givenName": profile._json.name.substr(0, profile._json.name.indexOf(' ')),
+                        "familyName": profile._json.name.substr(1, profile._json.name.indexOf(' '))
                     },
-                    'password': '',
-                    'image': profile._json.profile_image_url_https.slice(this.length, -11) + '.jpg',
-                    'email': profile.emails[0].value,
-                    'active': 1
+                    "account.image": profile._json.profile_image_url_https.slice(this.length, -11) + '.jpg',
                 });
 
                 // save user in the database
@@ -180,10 +180,10 @@ passport.use(new TwitterStrategy(authProviders.twitter, function(token, tokenSec
 passport.use(new GoogleStrategy(authProviders.google, function(accessToken, refreshToken, profile, done) {
     process.nextTick(function () {
         User.findOne({'$or': [{
-                'auth.oauthID': profile.id,
-                'auth.provider': 'google'
+                "auth.oauthID": profile.id,
+                "auth.provider": "google"
             }, {
-                'email': profile.emails[0].value
+                "account.email": profile.emails[0].value
             }]}, function(err, user) {
             if (err)
                 return done(err);
@@ -192,18 +192,18 @@ passport.use(new GoogleStrategy(authProviders.google, function(accessToken, refr
                 // if user is found then log them in
                 return done(null, user);
             } else {
-                // if user is not found, create a new user based on their Google account info
+                // if user is not found, create a new user based on their Twitter account info
                 user = new User({
-                    'auth.provider': 'google',
-                    'auth.oauthID': profile.id,
-                    'name': {
-                        'first': profile.name.givenName,
-                        'last': profile.name.familyName
+                    "auth.provider": "google",
+                    "auth.oauthID": profile.id,
+                    "account.active": 1,
+                    "account.email": profile.emails[0].value,
+                    "account.password": "",
+                    "account.name": {
+                        "givenName": profile.name.givenName,
+                        "familyName": profile.name.familyName
                     },
-                    'password': '',
-                    'image': profile.photos[0].value.slice(0, -2) + '200',
-                    'email': profile.emails[0].value,
-                    'active': 1
+                    "account.image": profile.photos[0].value.slice(0, -2) + '200',
                 });
 
                 // save user in the database
