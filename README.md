@@ -72,8 +72,8 @@ npm run dev
 
 ## Configuration
 
-`NOTE:` When working with keys and tokens, it is better to use randomly generated keys. 
-You can generate strong passwords and keys with [RandomKeygen](https://randomkeygen.com)
+`NOTE:` When working with keys and tokens, it is better to use randomly generated keys. \
+You can generate strong passwords and keys with [Random Key Generator](https://randomkeygen.com).
 
 ### Environment variables
 The following environment variables are mandatory:
@@ -148,7 +148,7 @@ By default, errors are returned as JSON in following format:
 
 ### Social authentication
 
-Unlike local authentication, social authentication does not work out of the box. 
+Unlike local authentication, social authentication does not work out of the box. \
 First, you need to provide `ID` and `secret key` of your social application.
 
 * [Where can I find my Facebook application ID and Secret?](https://stackoverflow.com/questions/3203649/where-can-i-find-my-facebook-application-id-and-secret-key)
@@ -156,7 +156,8 @@ First, you need to provide `ID` and `secret key` of your social application.
 * [How can I get my Google account Client ID and Client Secret key?](https://www.appypie.com/faqs/how-can-i-get-my-google-acount-client-id-and-client-secret-key)
 
 ### JSON Web Token (JWT)
-By default, JWT token expires in 60 minutes. If you want to extend the lifetime of this token, adjust the `exp` property of the JWT.
+By default, JWT token expires in 60 minutes. \
+If you want to extend the lifetime of this token, adjust the `exp` property of the JWT.
 
 In `models/User.js`:
 
