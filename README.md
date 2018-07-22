@@ -126,8 +126,8 @@ By default, the `User` model will have a following schema:
 		"password" : "$2a$10$DtHlTExi3c5jKlP5y2SWvOtP7QcJNodoi30QglWQ/cL0r5cT3FcDC",
 		"email" : "test@user.com",
 		"name" : {
-			"familyName" : "John",
-			"givenName" : "Doe"
+			"familyName" : "Doe",
+			"givenName" : "John"
 		},
 		"active" : 0
 	},
@@ -150,7 +150,8 @@ By default, errors are returned as JSON in following format:
 You can easily secure a route or endpoint by injecting a `auth.required` middleware to route:
 
 ```javascript
-const router = require('express').Router();
+const router = require('express').Router()
+    , auth = require('./middleware/auth');
 
 router.put('/user', [auth.required], UserController.update);  // this route is secured with required middleware
 router.get('/user, UserController.find'); // this route is publicly available

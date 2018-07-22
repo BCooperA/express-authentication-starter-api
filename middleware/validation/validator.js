@@ -2,7 +2,7 @@
  |--------------------------------------------------------------------------
  | Middleware - Validation
  |--------------------------------------------------------------------------
- | This is the file wherer you can declare validation for certain inputs
+ | This is the file where you can declare validation for certain fields
  |--------------------------------------------------------------------------
  */
 const util                          = require('util')
