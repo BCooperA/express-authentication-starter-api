@@ -47,9 +47,9 @@ npm run dev
 |Method| Endpoint URL                    | Params (if needed)     | Action       |
 | ---- |---------------------| -----------------------------------| -------------|
 | POST | /auth/signin                    |     email, password    | Authenticates users with username and password |
-| GET  | /auth/signin/facebook/callback  |                        | Authenticates users with Facebook |
-| GET  | /auth/signin/twitter/callback   |                        | Authenticates users with Twitter |
-| GET  | /auth/signin/google/callback    |                        | Authenticates users with Google |
+| GET  | /auth/signin/facebook           |                        | Authenticates users with Facebook |
+| GET  | /auth/signin/twitter            |                        | Authenticates users with Twitter |
+| GET  | /auth/signin/google             |                        | Authenticates users with Google |
 
 ### Account
 
