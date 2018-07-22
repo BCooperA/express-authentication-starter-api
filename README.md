@@ -72,7 +72,8 @@ npm run dev
 
 ## Configuration
 
-When working with secret keys and tokens, it is better to use random keys. You can generate strong passwords and keys with [RandomKeygen](https://randomkeygen.com)
+`NOTE:` When working with keys and tokens, it is better to use randomly generated keys. 
+You can generate strong passwords and keys with [RandomKeygen](https://randomkeygen.com)
 
 ### Environment variables
 The following environment variables are mandatory:
