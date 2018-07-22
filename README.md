@@ -146,6 +146,17 @@ By default, errors are returned as JSON in following format:
 }
 ```
 
+### Secure routes
+You can easily secure a route or endpoint by injecting a `auth.required` middleware to route:
+
+```javascript
+const router = require('express').Router();
+
+router.put('/user', [auth.required], UserController.update);  // this route is secured with required middleware
+router.get('/user, UserController.find'); // this route is publicly available
+
+module.exports = router;
+```
 ### Social authentication
 
 Unlike local authentication, social authentication does not work out of the box. \
