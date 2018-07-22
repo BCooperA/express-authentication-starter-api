@@ -107,39 +107,6 @@ GMAIL_PASSWORD=     # <- Gmail password
 
 ```
 
-### Social authentication
-
-Unlike local authentication, social authentication does not work out of the box. 
-First, you need to provide `ID` and `secret key` of your social application.
-
-[Where can I find my Facebook application ID and Secret?](https://stackoverflow.com/questions/3203649/where-can-i-find-my-facebook-application-id-and-secret-key)
-[How do I find my Twitter application ID and Consumer Secret key ?](https://twittercommunity.com/t/how-do-i-find-my-consumer-key-and-secret/646/2)
-[How can I get my Google account Client ID and Client Secret key?](https://www.appypie.com/faqs/how-can-i-get-my-google-acount-client-id-and-client-secret-key)
-
-### Token expiration
-By default, JWT token expires in 60 minutes. If you want to extend the lifetime of this token, adjust the `exp` property of the JWT.
-
-In `models/User.js`:
-
-```
-/**
- * Generates JSON Web Token (JWT) for authenticated user
- * @returns {*}
- */
-UserSchema.methods.generateJWT = function() {
-    var today = new Date();
-    var exp = new Date(today);
-    exp.setDate(today.getDate() + 60);
-
-    return jwt.sign({
-        id: this._id,
-        email: this.email,
-        exp: Math.floor(Date.now() / 1000) + (60 * 60) // Set the token expire time to 60 min
-    }, secret);
-};
-
-```
-
 ### User Model
 By default, the `User` model will have a following schema:
 
@@ -174,6 +141,39 @@ By default, errors are returned as JSON in following format:
 "error": "Not Found",
 "message": "Not Found"
 }
+```
+
+### Social authentication
+
+Unlike local authentication, social authentication does not work out of the box. 
+First, you need to provide `ID` and `secret key` of your social application.
+
+* [Where can I find my Facebook application ID and Secret?](https://stackoverflow.com/questions/3203649/where-can-i-find-my-facebook-application-id-and-secret-key)
+* [How do I find my Twitter application ID and Consumer Secret key ?](https://twittercommunity.com/t/how-do-i-find-my-consumer-key-and-secret/646/2)
+* [How can I get my Google account Client ID and Client Secret key?](https://www.appypie.com/faqs/how-can-i-get-my-google-acount-client-id-and-client-secret-key)
+
+### JSON Web Token (JWT)
+By default, JWT token expires in 60 minutes. If you want to extend the lifetime of this token, adjust the `exp` property of the JWT.
+
+In `models/User.js`:
+
+```
+/**
+ * Generates JSON Web Token (JWT) for authenticated user
+ * @returns {*}
+ */
+UserSchema.methods.generateJWT = function() {
+    var today = new Date();
+    var exp = new Date(today);
+    exp.setDate(today.getDate() + 60);
+
+    return jwt.sign({
+        id: this._id,
+        email: this.email,
+        exp: Math.floor(Date.now() / 1000) + (60 * 60) // Set the token expire time to 60 min
+    }, secret);
+};
+
 ```
 
 ## TODOS
