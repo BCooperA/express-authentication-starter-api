@@ -1,3 +1,5 @@
+# express-authentication-starter-api 
+
 A small, easily extendable base API for authenticating users with JSON Web Token (JWT), written with Express.js.
 
 ## Installation
@@ -110,11 +112,11 @@ GMAIL_PASSWORD=     # <- Gmail password
 ### User Model
 By default, the `User` model will have a following schema:
 
-```
+```json
 {
-	"_id" : ObjectId("5b54ff68e1f46c527ad9fd64"),
-	"updatedAt" : ISODate("2018-07-22T22:04:24.967Z"),
-	"createdAt" : ISODate("2018-07-22T22:04:24.967Z"),
+	"_id" : "5b54ff68e1f46c527ad9fd64",
+	"updatedAt" : "2018-07-22T22:04:24.967Z",
+	"createdAt" : "2018-07-22T22:04:24.967Z",
 	"tokens" : {
 		"reset" : "",
 		"activation" : "dPr1Rc654dIcjmeQhoF213z6Pv9NoFtM"
@@ -135,7 +137,7 @@ By default, the `User` model will have a following schema:
 ### Error handling 
 By default, errors are returned as JSON in following format:
 
-```
+```json
 {
 "statusCode": 404,
 "error": "Not Found",
@@ -157,7 +159,7 @@ By default, JWT token expires in 60 minutes. If you want to extend the lifetime 
 
 In `models/User.js`:
 
-```
+```javascript
 /**
  * Generates JSON Web Token (JWT) for authenticated user
  * @returns {*}
