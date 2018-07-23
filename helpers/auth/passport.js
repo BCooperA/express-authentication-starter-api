@@ -16,8 +16,7 @@ const passport         = require('passport')
     , LocalStrategy    = require('passport-local').Strategy
     , FacebookStrategy = require('passport-facebook').Strategy
     , TwitterStrategy  = require('passport-twitter').Strategy
-    , GoogleStrategy   = require('passport-google-oauth20').Strategy
-    , AccountHelper    = require('../../helpers/auth/social.authentication');
+    , GoogleStrategy   = require('passport-google-oauth20').Strategy;
 
 /**
  |--------------------------------------------------------------------------
