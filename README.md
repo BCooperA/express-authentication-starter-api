@@ -52,7 +52,7 @@ for testing and developing APIs.
 
 * *Default API Prefix:* [http://localhost:3000](http://localhost:3000)
 
-### Authentication
+#### Authentication
 
 |Method| Endpoint URL                    | Params (if needed)     | Action       |
 | ---- |---------------------| -----------------------------------| -------------|
@@ -61,7 +61,7 @@ for testing and developing APIs.
 | GET  | /auth/signin/twitter            |                        | Authenticates users with Twitter |
 | GET  | /auth/signin/google             |                        | Authenticates users with Google |
 
-### Account
+#### Account
 
 |Method| Endpoint URL                       | Params (if needed)     | Action       |
 | ---- |---------------------| --------------------------------------| -------------|
@@ -70,7 +70,7 @@ for testing and developing APIs.
 | PUT | /account/password/recover           |                        | Send reset instructions via e-mail |
 | PUT  | /account/password/reset/:token     |        token           | Resets password |
 
-### User
+#### User
 
 |Method| Endpoint URL        |         Params (if needed)         | Action       |
 | ---- |---------------------| -----------------------------------| -------------|
