@@ -102,6 +102,8 @@ JWT_TOKEN_EXPIRES    # <- time of when jwt token expires in minutes
 SESSION_SECRET=      # <- secret key for sessions
 ```
 
+***
+
 #### Social authentication
 
 If social authentication is used, one or more of the following environment variables is required:
@@ -145,6 +147,37 @@ GMAIL_PASSWORD=     # <- your gmail password
 
 ***
 
+### Securing endpoints
+You can easily secure an API endpoint by injecting a `auth.required` middleware to route:
+
+```javascript
+const router = require('express').Router()
+    , auth = require('./middleware/auth');
+
+// this route is secured with required middleware
+router.put('/user', [auth.required], UserController.update);  
+
+// this route is publicly available
+router.get('/user, UserController.find');
+
+module.exports = router;
+```
+
+***
+
+### Error handling 
+By default, errors are returned as JSON in following format:
+
+```json
+{
+"statusCode": 404,
+"error": "Not Found",
+"message": "Not Found"
+}
+```
+
+***
+
 ### User Model
 By default, the `User` model will have a following schema:
 
@@ -171,34 +204,6 @@ By default, the `User` model will have a following schema:
 ```
 
 ***
-
-### Error handling 
-By default, errors are returned as JSON in following format:
-
-```json
-{
-"statusCode": 404,
-"error": "Not Found",
-"message": "Not Found"
-}
-```
-
-***
-### Securing routes
-You can easily secure an API endpoint by injecting a `auth.required` middleware to route:
-
-```javascript
-const router = require('express').Router()
-    , auth = require('./middleware/auth');
-
-// this route is secured with required middleware
-router.put('/user', [auth.required], UserController.update);  
-
-// this route is publicly available
-router.get('/user, UserController.find');
-
-module.exports = router;
-```
 
 ## TODOS
 
