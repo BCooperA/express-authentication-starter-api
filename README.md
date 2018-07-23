@@ -185,24 +185,21 @@ By default, the `User` model will have a following schema:
 
 ```json
 {
-	"_id" : "5b54ff68e1f46c527ad9fd64",
-	"updatedAt" : "2018-07-22T22:04:24.967Z",
-	"createdAt" : "2018-07-22T22:04:24.967Z",
-	"tokens" : {
-		"reset" : "",
-		"activation" : "dPr1Rc654dIcjmeQhoF213z6Pv9NoFtM"
-	},
+	"_id" : "5b56601013654b00046f1304",
+	"updatedAt" : "2018-07-23T23:09:04.241Z",
+	"createdAt" : "2018-07-23T23:09:04.241Z",
 	"account" : {
-		"password" : "$2a$10$DtHlTExi3c5jKlP5y2SWvOtP7QcJNodoi30QglWQ/cL0r5cT3FcDC",
-		"email" : "test@user.com",
+        "active" : 1,
+		"email" : "johndoe@gmail.com",
+		"password" : "$2a$10$BUobINnijcl.JtdaABqBLewUZeY5Cj6OCxJZe1/zWCltCcZi.CfS.",
+		"image" : "https://www.imageurl.com/image.jpg",
 		"name" : {
-			"familyName" : "Doe",
-			"givenName" : "John"
-		},
-		"active" : 0
-	},
-	"__v" : 0
+			"givenName" : "John",
+			"familyName" : "Doe"
+		}
+	}
 }
+
 ```
 
 ***
