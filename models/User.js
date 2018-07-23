@@ -53,12 +53,17 @@ const UserSchema = new mongoose.Schema({
     },
     tokens: {
         activation: {
-            type: String,
-            default: ''
+            token: {
+                type: String,
+            },
         },
         reset: {
-            type: String,
-            default: ''
+            expires: {
+                type: Date,
+            },
+            token: {
+                type: String,
+            },
         }
     }
 }, {
@@ -78,7 +83,7 @@ UserSchema.methods.validPassword = function(password) {
  * Hash password with blowfish algorithm (bcrypt) before saving it in to the database
  */
 UserSchema.pre('save', function(next) {
-    var user = this;
+    let user = this;
 
     // only hash the password if it has been modified (or is new)
     if (!user.isModified('account.password'))
@@ -93,13 +98,13 @@ UserSchema.pre('save', function(next) {
  * @returns {*}
  */
 UserSchema.methods.generateJWT = function() {
-    var today = new Date();
-    var exp = new Date(today);
+    let today = new Date();
+    let exp = new Date(today);
     exp.setDate(today.getDate() + 60);
 
     return jwt.sign({
         id: this._id,
-        email: this.email,
+        email: this.account.email,
         exp: Math.floor(Date.now() / 1000) + (60 * process.env.JWT_TOKEN_EXPIRES)
     }, secret);
 };
@@ -111,7 +116,7 @@ UserSchema.methods.generateJWT = function() {
 UserSchema.methods.toAuthJSON = function() {
     return {
         _id: this._id,
-        email: this.email,
+        email: this.account.email,
         token: this.generateJWT()
     };
 };
@@ -123,11 +128,10 @@ UserSchema.methods.toAuthJSON = function() {
 UserSchema.methods.toProfileJSONFor = function(user) {
     return {
         _id: this._id,
-        username: this.username,
-        name: this.name.first + ' ' + this.name.last,
-        location: this.location,
+        email: this.account.email,
+        name: this.account.name.givenName + ' ' + this.account.name.familyName,
         // bio: this.bio,
-        image: this.image || 'https://static.productionready.io/images/smiley-cyrus.jpg',
+        image: this.account.image || 'https://static.productionready.io/images/smiley-cyrus.jpg',
     };
 };
 

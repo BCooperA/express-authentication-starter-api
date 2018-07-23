@@ -33,32 +33,32 @@ router.get('/email/:email', AccountController.checkEmail);
  | validates it (runs a query to check that token belongs to someone) and eventually
  | removes activation token from the database and activates user byt setting the active property to 1
  */
-router.get('/activate/:token', AccountController.activateUser);
+router.get('/activate/:token', AccountController.activate);
 
 /**
  |--------------------------------------------------------------------------
  | Password recovery request
  |--------------------------------------------------------------------------
  | HTTP Method: PUT
- | Endpoint URL: "/account/account/recover"
+ | Endpoint URL: "/account/recover"
  |--------------------------------------------------------------------------
  | Receives email address from request body
  | validates it (runs a query to check that email belongs to someone) and eventually
  | sends an link to reset password via e-mail
  */
-router.put('/password/recover', AccountController.recoverUser);
+router.put('/recover', AccountController.recover);
 
 /**
  |--------------------------------------------------------------------------
  | Password reset request
  |--------------------------------------------------------------------------
  | HTTP Method: PUT
- | Endpoint URL: "/account/account/reset/:token"
+ | Endpoint URL: "/account/reset/:token"
  |--------------------------------------------------------------------------
  | Receives token for resetting password from URI parameters,
  | validates it (runs a query to check that token belongs to someone) and eventually
  | replaces old password with new password
  */
-router.put('/account/reset/:token', [validate.password], AccountController.resetUser);
+router.put('/reset/:token', [validate.password], AccountController.reset);
 
 module.exports = router;

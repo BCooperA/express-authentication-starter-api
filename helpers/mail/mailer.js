@@ -18,7 +18,7 @@ const Mailer = {
     _transport: null,
 
     init: function (config) {
-        var d = Q.defer();
+        let d = Q.defer();
 
         new emailTemplates(config.emailTplsDir, function (err, template) {
             if (err) {
@@ -34,8 +34,8 @@ const Mailer = {
     },
 
     send: function (from, to, subject, text, html) {
-        var d = Q.defer();
-        var params = {
+        let d = Q.defer();
+        let params = {
             from: from,
             to: to,
             subject: subject,
@@ -59,8 +59,8 @@ const Mailer = {
     },
 
     sendMail: function (from, to, subject, tplName, locals) {
-        var d = Q.defer();
-        var self = this;
+        let d = Q.defer();
+        let self = this;
 
         this.init({ emailTplsDir: "views/email-templates" }).then(function () {
             this._template(tplName, locals, function (err, html, text) {

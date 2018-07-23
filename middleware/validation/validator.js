@@ -29,7 +29,7 @@ let validation = {
             .isEmail().withMessage('Invalid e-mail address.')
             .isLength({ max: 256 }).withMessage('Email is too long.')
             .custom(value => {
-                return User.findOne({email: value}).then(user => {
+                return User.findOne({ "account.email": value }).then(user => {
                     if(user)
                         return Promise.reject('E-mail already in use');
                 })

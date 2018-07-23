@@ -53,7 +53,7 @@ passport.use(new LocalStrategy({ usernameField: 'user[email]', passwordField: 'u
             }
 
             // inactive account
-            if(user.tokens.activation !== '' || user.account.active === 0) {
+            if(user.tokens.activation.token !== '' || user.account.active === 0) {
                 // account is not activated
                 return done(null, false, { msg: "Inactive account" });
             }

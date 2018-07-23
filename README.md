@@ -98,8 +98,9 @@ APP_DOMAIN=          # <- domain of the application
 DEVELOPMENT_MODE=    # <- current development mode
 MONGO_URL=           # <- mongo database url
 JWT_SECRET=          # <- secret key for json web tokens (jwt)
-JWT_TOKEN_EXPIRES    # <- time of when jwt token expires in minutes
+JWT_TOKEN_EXPIRES    # <- time of when jwt token expires, in minutes
 SESSION_SECRET=      # <- secret key for sessions
+RESET_TOKEN_EXPIRES= # <- time of when account reset token expires, in minutes
 ```
 
 ***
@@ -208,13 +209,5 @@ By default, the `User` model will have a following schema:
 ## TODOS
 
 * ~~Better error handling with [Boom](https://github.com/scottcorgan/express-boom).~~
-* Load modules conditionally based on production mode
-* Add expiration date to tokens
-
-
-
-
-
-
-
-
+* ~~Expiration of reset tokens~~
+* Load modules conditionally based on development mode
