@@ -185,19 +185,19 @@ By default, the `User` model will have a following schema:
 
 ```json
 {
-	"_id" : "5b56601013654b00046f1304",
-	"updatedAt" : "2018-07-23T23:09:04.241Z",
-	"createdAt" : "2018-07-23T23:09:04.241Z",
-	"account" : {
-        "active" : 1,
-		"email" : "johndoe@gmail.com",
-		"password" : "$2a$10$BUobINnijcl.JtdaABqBLewUZeY5Cj6OCxJZe1/zWCltCcZi.CfS.",
-		"image" : "https://www.imageurl.com/image.jpg",
-		"name" : {
-			"givenName" : "John",
-			"familyName" : "Doe"
-		}
+  "_id" : "5b56601013654b00046f1304",
+  "updatedAt" : "2018-07-23T23:09:04.241Z",
+  "createdAt" : "2018-07-23T23:09:04.241Z",
+  "account" : {
+    "active" : 1,
+    "email" : "johndoe@gmail.com",
+    "password" : "$2a$10$BUobINnijcl.JtdaABqBLewUZeY5Cj6OCxJZe1/zWCltCcZi.CfS.",
+    "image" : "https://www.imageurl.com/image.jpg",
+    "name" : {
+      "givenName" : "John",
+      "familyName" : "Doe"
 	}
+  }
 }
 
 ```
