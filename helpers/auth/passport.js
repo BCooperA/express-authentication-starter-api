@@ -47,7 +47,7 @@ passport.use(new LocalStrategy({ usernameField: 'user[email]', passwordField: 'u
                 return done(err);
 
             // incorrect credentials
-            if (!user || !user.validPassword(password) || user.account.password === '') {
+            if (!user || !user.validPassword(password) || user.account.password === undefined ) {
                 return done(null, false, { msg: "Incorrect credentials" });
             }
 
@@ -93,7 +93,7 @@ passport.use(new FacebookStrategy(authProviders.facebook, function(accessToken, 
                     "auth.oauthID": profile.id,
                     "account.active": 1,
                     "account.email": profile.emails[0].value,
-                    "account.password": "",
+                    "account.password": undefined,
                     "account.name": {
                         "givenName": profile._json.first_name,
                         "familyName": profile._json.last_name
