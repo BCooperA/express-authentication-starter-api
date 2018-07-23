@@ -30,7 +30,7 @@ let AccountController = {
             // 401 unauthorized
                 return res.boom.unauthorized('Invalid activation token');
 
-            user.tokens.activation.token = undefined;
+            user.tokens.activation = undefined;
             user.account.active = 1;
 
             return user.save().then(function() {
