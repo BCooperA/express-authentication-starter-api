@@ -2,6 +2,18 @@
 
 A small, easily extendable base API for authenticating users with JSON Web Token (JWT), written with Express.js.
 
+***
+
+## What's included ?
+* Local authentication - Authenticate users statelessly with [Passport.js](https://github.com/jaredhanson/passport) using [JSON Web Tokens (JWT)](https://jwt.io)
+* Social authentication - Authenticate users via Facebook, Twitter or Google with [Passport.js](https://github.com/jaredhanson/passport)
+* Request validation - validate user input with pre-built middlewares, using [express-validator](https://github.com/express-validator/express-validator) 
+* Password recovery / reset
+* Mongoose User schema, easy to extend. Read more about [Mongoose](http://mongoosejs.com)
+* Emails - Templated e-mails for signup and password recover
+
+***
+
 ## Installation
 
 *1.* Install [Node.js](https://nodejs.org/en/)
@@ -31,17 +43,6 @@ npm install
 npm run dev
 
 ```
-
-***
-
-## What's included ?
-* Local authentication - Authenticate users statelessly with [Passport.js](https://github.com/jaredhanson/passport) using [JSON Web Tokens (JWT)](https://jwt.io)
-* Social authentication - Authenticate users via Facebook, Twitter or Google with [Passport.js](https://github.com/jaredhanson/passport)
-* Request validation - validate user input with pre-built middlewares, using [express-validator](https://github.com/express-validator/express-validator) 
-* Password recovery / reset
-* Mongoose User schema, easy to extend. Read more about [Mongoose](http://mongoosejs.com)
-* Emails - Templated e-mails for signup and password recover
-
 ***
 
 ## API Routes
