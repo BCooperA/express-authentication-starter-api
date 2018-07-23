@@ -32,6 +32,9 @@ npm run dev
 
 ```
 
+***
+
+
 ## What's included ?
 * Local authentication - Authenticate users statelessly with [Passport.js](https://github.com/jaredhanson/passport) using [JSON Web Tokens (JWT)](https://jwt.io)
 * Social authentication - Authenticate users via Facebook, Twitter or Google with [Passport.js](https://github.com/jaredhanson/passport)
@@ -39,6 +42,8 @@ npm run dev
 * Password recovery / reset
 * Mongoose User schema, easy to extend. Read more about [Mongoose](http://mongoosejs.com)
 * Emails - Templated e-mails for signup and password recover
+
+***
 
 ## API Routes
 
@@ -69,6 +74,7 @@ npm run dev
 | PUT | /api/user            |                                    | Updates user data
 | POST| /api/users           |                                    | Creates new user |
 
+***
 
 ## Configuration
 
@@ -76,7 +82,7 @@ npm run dev
 You can generate strong passwords and keys with [Random Key Generator](https://randomkeygen.com).
 
 ### Environment variables
-The following environment variables are mandatory:
+The following environment variables are required:
 
 ```
 APP_NAME=            # <- name of the application
@@ -87,27 +93,42 @@ JWT_SECRET=          # <- secret key for json web tokens (jwt)
 SESSION_SECRET=      # <- secret key for sessions
 ```
 
-In addition, if social authentication is used, the following environment variables are also mandatory:
+#### Social authentication
+If social authentication is used, one or more of the following environment variables is required:
 
+##### Facebook
 ```
 FACEBOOK_CLIENT_ID=         # <- client ID of your Facebook application
 FACEBOOK_CLIENT_SECRET=     # <- client secret of your Facebook application
 FACEBOOK_CALLBACK_URL=      # <- callback url when facebook authentication was successful
-
+```
+##### Twitter
+```
 TWITTER_CONSUMER_KEY=       # <- client ID of your Twitter application
 TWITTER_CONSUMER_SECRET=    # <- client secret of your Twitter application
 TWITTER_CALLBACK_URL=       # <- callback url when twitter authentication was successful
-
+```
+##### Google
+```
 GOOGLE_CLIENT_ID=           # <- client ID of your Google application
 GOOGLE_CLIENT_SECRET=       # <- client secret of your Google application
 GOOGLE_CALLBACK_URL=        # <- callback url when google authentication was successful
 ```
 
-If emails are sent via Gmail, the following environment variables are mandatory:
-```
-GMAIL_USER=         # <- Gmail username
-GMAIL_PASSWORD=     # <- Gmail password
+* [Where can I find my Facebook application ID and Secret?](https://stackoverflow.com/questions/3203649/where-can-i-find-my-facebook-application-id-and-secret-key)
+* [How do I find my Twitter application ID and Consumer Secret key ?](https://twittercommunity.com/t/how-do-i-find-my-consumer-key-and-secret/646/2)
+* [How can I get my Google account Client ID and Client Secret key?](https://www.appypie.com/faqs/how-can-i-get-my-google-acount-client-id-and-client-secret-key)
 
+#### Send emails with your Gmail account
+
+`NOTE:` Sending emails via your gmail account should be used only in testing purposes and development environment. \
+For production mode, use an Email Delivery Service, such as [MailGun](https://www.mailgun.com) or [SendGrid](https://sendgrid.com).
+
+If emails are sent via Gmail, the following environment variables are required:
+
+```
+GMAIL_USER=         # <- your gmail email address
+GMAIL_PASSWORD=     # <- your gmail password
 ```
 
 ### User Model
@@ -163,9 +184,7 @@ module.exports = router;
 Unlike local authentication, social authentication does not work out of the box. \
 First, you need to provide `ID` and `secret key` of your social application.
 
-* [Where can I find my Facebook application ID and Secret?](https://stackoverflow.com/questions/3203649/where-can-i-find-my-facebook-application-id-and-secret-key)
-* [How do I find my Twitter application ID and Consumer Secret key ?](https://twittercommunity.com/t/how-do-i-find-my-consumer-key-and-secret/646/2)
-* [How can I get my Google account Client ID and Client Secret key?](https://www.appypie.com/faqs/how-can-i-get-my-google-acount-client-id-and-client-secret-key)
+
 
 ### JSON Web Token (JWT)
 By default, JWT token expires in 60 minutes. \
