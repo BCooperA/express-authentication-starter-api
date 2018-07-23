@@ -206,6 +206,12 @@ By default, the `User` model will have a following schema:
 
 ***
 
+## Demo
+
+API demo available at: [https://express-auth-with-jwt.herokuapp.com](https://express-auth-with-jwt.herokuapp.com)
+
+***
+
 ## TODOS
 
 * ~~Better error handling with [Boom](https://github.com/scottcorgan/express-boom).~~
