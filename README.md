@@ -34,7 +34,6 @@ npm run dev
 
 ***
 
-
 ## What's included ?
 * Local authentication - Authenticate users statelessly with [Passport.js](https://github.com/jaredhanson/passport) using [JSON Web Tokens (JWT)](https://jwt.io)
 * Social authentication - Authenticate users via Facebook, Twitter or Google with [Passport.js](https://github.com/jaredhanson/passport)
@@ -81,7 +80,10 @@ npm run dev
 `NOTE:` When working with keys and tokens, it is better to use randomly generated keys. \
 You can generate strong passwords and keys with [Random Key Generator](https://randomkeygen.com).
 
-### Environment variables
+### Environment 
+`NOTE:` Make a copy from your `.env.example` file and save it to `.env` before modifying any environment variables.
+
+
 The following environment variables are required:
 
 ```
@@ -119,6 +121,8 @@ GOOGLE_CALLBACK_URL=        # <- callback url when google authentication was suc
 * [How do I find my Twitter application ID and Consumer Secret key ?](https://twittercommunity.com/t/how-do-i-find-my-consumer-key-and-secret/646/2)
 * [How can I get my Google account Client ID and Client Secret key?](https://www.appypie.com/faqs/how-can-i-get-my-google-acount-client-id-and-client-secret-key)
 
+***
+
 #### Send emails with your Gmail account
 
 `NOTE:` Sending emails via your gmail account should be used only in testing purposes and development environment. \
@@ -130,6 +134,8 @@ If emails are sent via Gmail, the following environment variables are required:
 GMAIL_USER=         # <- your gmail email address
 GMAIL_PASSWORD=     # <- your gmail password
 ```
+
+***
 
 ### User Model
 By default, the `User` model will have a following schema:
@@ -156,6 +162,8 @@ By default, the `User` model will have a following schema:
 }
 ```
 
+***
+
 ### Error handling 
 By default, errors are returned as JSON in following format:
 
@@ -167,26 +175,24 @@ By default, errors are returned as JSON in following format:
 }
 ```
 
-### Secure routes
-You can easily secure a route or endpoint by injecting a `auth.required` middleware to route:
+***
+### Securing routes
+You can easily secure an API endpoint by injecting a `auth.required` middleware to route:
 
 ```javascript
 const router = require('express').Router()
     , auth = require('./middleware/auth');
 
-router.put('/user', [auth.required], UserController.update);  // this route is secured with required middleware
-router.get('/user, UserController.find'); // this route is publicly available
+// this route is secured with required middleware
+router.put('/user', [auth.required], UserController.update);  
+
+// this route is publicly available
+router.get('/user, UserController.find');
 
 module.exports = router;
 ```
-### Social authentication
 
-Unlike local authentication, social authentication does not work out of the box. \
-First, you need to provide `ID` and `secret key` of your social application.
-
-
-
-### JSON Web Token (JWT)
+### Extend the time of token expiration 
 By default, JWT token expires in 60 minutes. \
 If you want to extend the lifetime of this token, adjust the `exp` property of the JWT.
 
