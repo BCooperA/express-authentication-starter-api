@@ -18,7 +18,7 @@ git clone https://github.com/BCooperA/express-authentication-starter-api.git
 > use YOUR_DATABASE_NAME
 ```
 
-*5.* Create a `.env` file from `.env.example` and add environment variables
+*5.* Create an `.env` file from `.env.example` for environment variables
 
 *6.* Install required dependencies for the application
 ```
@@ -45,6 +45,12 @@ npm run dev
 ***
 
 ## API Routes
+
+`NOTE:` I would recommend [Postman](https://www.getpostman.com) or 
+[Advanced REST Client](https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo)
+for testing and developing APIs.
+
+* *Default API Prefix:* [http://localhost:3000](http://localhost:3000)
 
 ### Authentication
 
@@ -80,7 +86,7 @@ npm run dev
 `NOTE:` When working with keys and tokens, it is better to use randomly generated keys. \
 You can generate strong passwords and keys with [Random Key Generator](https://randomkeygen.com).
 
-### Environment 
+### Environment variables
 `NOTE:` Make a copy from your `.env.example` file and save it to `.env` before modifying any environment variables.
 
 
@@ -92,10 +98,12 @@ APP_DOMAIN=          # <- domain of the application
 DEVELOPMENT_MODE=    # <- current development mode
 MONGO_URL=           # <- mongo database url
 JWT_SECRET=          # <- secret key for json web tokens (jwt)
+JWT_TOKEN_EXPIRES    # <- time of when jwt token expires in minutes
 SESSION_SECRET=      # <- secret key for sessions
 ```
 
 #### Social authentication
+
 If social authentication is used, one or more of the following environment variables is required:
 
 ##### Facebook
@@ -190,31 +198,6 @@ router.put('/user', [auth.required], UserController.update);
 router.get('/user, UserController.find');
 
 module.exports = router;
-```
-
-### Extend the time of token expiration 
-By default, JWT token expires in 60 minutes. \
-If you want to extend the lifetime of this token, adjust the `exp` property of the JWT.
-
-In `models/User.js`:
-
-```javascript
-/**
- * Generates JSON Web Token (JWT) for authenticated user
- * @returns {*}
- */
-UserSchema.methods.generateJWT = function() {
-    var today = new Date();
-    var exp = new Date(today);
-    exp.setDate(today.getDate() + 60);
-
-    return jwt.sign({
-        id: this._id,
-        email: this.email,
-        exp: Math.floor(Date.now() / 1000) + (60 * 60) // Set the token expire time to 60 min
-    }, secret);
-};
-
 ```
 
 ## TODOS

@@ -12,7 +12,8 @@ const mongoose        = require('mongoose')
     , User            = mongoose.model('User')
     , passport        = require('passport')
     , accountHelper   = require('../helpers/auth/social.authentication')
-    , boom            = require('express-boom');
+    , boom            = require('express-boom')
+    , jwt             = require('jsonwebtoken');
 
 let AuthController = {
     /**
@@ -23,7 +24,7 @@ let AuthController = {
      */
     local: function(req, res, next) {
         if(req.body.user.email === '' || req.body.user.password === '')
-            // overrides passports own error handler
+        // overrides passports own error handler
             return res.boom.badData('Missing credentials');
 
         passport.authenticate('local', { session: false }, function(err, user, info) {
@@ -31,13 +32,11 @@ let AuthController = {
                 return next(err);
 
             if(!user)
-                // return validation errors
+            // return validation errors
                 return res.boom.badData(info.msg);
 
-            // generate JSON web token to user
+            // generate JSON web token to user //
             user.token = user.generateJWT();
-
-            // return user object
             return res.status(200).json({ user: user.toAuthJSON() });
         })(req, res, next);
     },

@@ -100,7 +100,7 @@ UserSchema.methods.generateJWT = function() {
     return jwt.sign({
         id: this._id,
         email: this.email,
-        exp: Math.floor(Date.now() / 1000) + (60 * 60) // Set the token expire time to 60 min
+        exp: Math.floor(Date.now() / 1000) + (60 * process.env.JWT_TOKEN_EXPIRES)
     }, secret);
 };
 
