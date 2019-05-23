@@ -60,9 +60,9 @@
     "util": "^0.11.1"
   },
   "devDependencies": {
-    "nodemon": "^1.19.0",
     "chai": "^3.5.0",
-    "chai-http": "^2.0.1",
-    "mocha": "^2.4.5"
+    "chai-http": "^4.3.0",
+    "mocha": "^6.1.4",
+    "nodemon": "^1.19.0"
   }
 }
