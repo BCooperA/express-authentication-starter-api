@@ -20,7 +20,7 @@ const router                        = require('express').Router()
  | Retrieves user data based on JSON Web Token saved in payload
  |
  */
-router.get('/user', auth.required, UserController.getByPayload);
+router.get('/user',  UserController.getByPayload);
 
 /**
  |--------------------------------------------------------------------------
@@ -40,7 +40,7 @@ router.get('/user/:id', UserController.getById);
  | Updates user data based on JSON Web Token saved in payload
  |
  */
-router.put('/user', [validate.email, validate.firstName, validate.lastName, validate.password, auth.required], UserController.update);
+router.put('/user', [validate.email, validate.firstName, validate.lastName, validate.password], UserController.update);
 
 /**
  |--------------------------------------------------------------------------

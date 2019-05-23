@@ -38,7 +38,7 @@ app.use(require('morgan')('dev'));                      // HTTP request logger m
 app.use(bodyParser.urlencoded({ extended: true }));     // returns middleware that only parses urlencoded bodies.
 app.use(bodyParser.json());                             // returns middleware that only parses json
 app.use(require('method-override')());                  // Lets you use HTTP verbs such as PUT or DELETE in places where the client doesn't support it.
-app.use(passport.initialize());                         // initialize passport strategies
+//app.use(passport.initialize());                         // initialize passport strategies
 app.use(boom());
 /**
  |--------------------------------------------------------------------------
@@ -47,7 +47,7 @@ app.use(boom());
  | Use these if you are developing a session based authentication (required for oAuth based authentication)
  */
 app.use(session(config.session));
-app.use(passport.session());
+//app.use(passport.session());
 
 
 /**
@@ -85,7 +85,7 @@ db.once('open', function callback () {
  |--------------------------------------------------------------------------
  */
 require('./models/User');
-require('./helpers/auth/passport');
+// require('./helpers/auth/passport');
 
 /**
  |--------------------------------------------------------------------------
