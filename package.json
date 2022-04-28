@@ -22,7 +22,7 @@
   },
   "homepage": "./",
   "dependencies": {
-    "async": "^2.6.1",
+    "async": "^2.6.4",
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.3",
