@@ -32,7 +32,7 @@
     "dotenv": "^5.0.0",
     "email-templates": "^2.7.1",
     "errorhandler": "1.4.3",
-    "express": "^4.16.2",
+    "express": "^4.17.3",
     "express-boom": "^2.0.0",
     "express-jwt": "^5.3.0",
     "express-session": "^1.15.6",
