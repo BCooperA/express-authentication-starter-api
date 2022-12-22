@@ -39,7 +39,7 @@
     "express-validator": "^5.2.0",
     "helmet": "^3.12.1",
     "hoek": "^5.0.3",
-    "jsonwebtoken": "^8.3.0",
+    "jsonwebtoken": "^9.0.0",
     "method-override": "^2.3.10",
     "methods": "1.1.2",
     "moment": "^2.22.2",
